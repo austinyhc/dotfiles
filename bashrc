@@ -123,11 +123,13 @@ alias .3='cd ../../../'
 alias .4='cd ../../../../'
 alias .5='cd ../../../../..'
 alias path='echo -e ${PATH//:/\\n}'
-alias reload='source ~/.bashrc'
+alias reload='source ~/.vim/bashrc'
+alias vimv='vim ~/.vim/vimrc'
+alias vimb='vim ~/.vim/bashrc'
 alias apt-get="sudo apt-get"
 alias update='echo "xserver-xorg-video-intel hold" | sudo dpkg --set-selections && \
               echo "xserver-common hold" | sudo dpkg --set-selections && \
-              sudo apt-get update && sudo apt-get upgrade'
+              sudo apt-get update && sudo apt-get upgrade && git -C ~/.vim pull'
 alias find="du -a . |grep "
 
 ## reboot / halt / poweroff
@@ -178,3 +180,20 @@ extract() {
     return "$e"
 }
 
+## set up for python virtualenv/virtualenvwrapper
+
+# where to store our virtual envs
+export WORKON_HOME=$HOME/.virtualenvs
+
+# where projects will reside
+export PROJECT_HOME=$HOME/workspace/project_codebase/python_base
+
+# where is the virtualenvwrapper.sh
+source /usr/local/bin/virtualenvwrapper.sh
+
+# quick alias
+alias lsv='lsvirtualenv'
+alias mkv='mkvirtualenv'
+alias rmv='rmvirtualenv'
+alias vin='workon'
+alias vout='deactivate'
