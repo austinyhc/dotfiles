@@ -9,13 +9,13 @@
 "    -> Colors and Fonts
 "    -> Files and backups
 "    -> Text, tab and indent related
-"    -> Visual mode related
-"    -> Moving around, tabs and buffers
+"    -> Visual selection related
 "    -> Status line
 "    -> Editing mappings
-"    -> vimgrep searching and cope displaying
 "    -> Spell checking
 "    -> Misc
+"    -> Taglist
+"    -> Ctags and Cscope
 "    -> Helper functions
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -101,6 +101,9 @@ set novisualbell
 set t_vb=
 set tm=500
 
+" Set relative line number as default
+" set relativenumber
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -158,77 +161,24 @@ set wrap "Wrap lines
 
 
 """"""""""""""""""""""""""""""
-" => Visual mode related
+" => Visual selection related
 """"""""""""""""""""""""""""""
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :call VisualSelection('f')<CR>
 vnoremap <silent> # :call VisualSelection('b')<CR>
 
+" When you press <leader>r you can search and replace the selected text
+vnoremap <silent> <leader>r :call VisualSelection('replace')<CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabs, windows and buffers
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Treat long lines as break lines (useful when moving around in them)
-map j gj
-map k gk
-
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
-map <c-space> ?
-
-" Disable highlight when <leader><cr> is pressed
-map <silent> <leader><cr> :noh<cr>
-
-" Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
-
-" Close the current buffer
-map <leader>bd :Bclose<cr>
-
-" Close all the buffers
-map <leader>ba :1,1000 bd!<cr>
-
-" Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
-
-" Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
-
-" Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
-
-" Specify the behavior when switching between buffers
-try
-  set switchbuf=useopen,usetab,newtab
-  set stal=2
-catch
-endtry
-
-" Return to last edit position when opening files (You want this!)
-autocmd BufReadPost *
-     \ if line("'\"") > 0 && line("'\"") <= line("$") |
-     \   exe "normal! g`\"" |
-     \ endif
-" Remember info about open buffers on close
-set viminfo^=%
-
-
-""""""""""""""""""""""""""""""
-" => Status line
-""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""
+" => Status line (Replaced by vim-airline)
+""""""""""""""""""""""""""""""""""""""""""
 " Always show the status line
 set laststatus=2
 
 " Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+" set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -244,10 +194,10 @@ vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 if has("mac") || has("macunix")
-  nmap <D-j> <M-j>
-  nmap <D-k> <M-k>
-  vmap <D-j> <M-j>
-  vmap <D-k> <M-k>
+    nmap <D-j> <M-j>
+    nmap <D-k> <M-k>
+    vmap <D-j> <M-j>
+    vmap <D-k> <M-k>
 endif
 
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
@@ -258,38 +208,6 @@ func! DeleteTrailingWS()
 endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vimgrep searching and cope displaying
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" When you press gv you vimgrep after the selected text
-vnoremap <silent> gv :call VisualSelection('gv')<CR>
-
-" Open vimgrep and put the cursor in the right position
-map <leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
-
-" Vimgreps in the current file
-map <leader><space> :vimgrep // <C-R>%<C-A><right><right><right><right><right><right><right><right><right>
-
-" When you press <leader>r you can search and replace the selected text
-vnoremap <silent> <leader>r :call VisualSelection('replace')<CR>
-
-" Do :help cope if you are unsure what cope is. It's super useful!
-"
-" When you search with vimgrep, display your results in cope by doing:
-"   <leader>cc
-"
-" To go to the next search result do:
-"   <leader>n
-"
-" To go to the previous search results do:
-"   <leader>p
-"
-map <leader>cc :botright cope<cr>
-map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
-map <leader>n :cn<cr>
-map <leader>p :cp<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -311,36 +229,8 @@ map <leader>s? z=
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
-" Quickly open a buffer for scripbble
-map <leader>q :e ~/buffer<cr>
-
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
-
-" Toggle highlight
-noremap <F4> :set hlsearch! hlsearch?<CR>
-
-" Toggle line number
-noremap <F3> :set nu! nu?<CR>
-noremap <F2> :set relativenumber! relativenumber?<CR>
-
-"// Highlight/remove unwanted white spaces
-function! TrimWhiteSpace()
-    %s/\s*$//
-    ''
-:endfunction
-
-" set list listchars=trail:.,extends:>
-highlight ExtraWhitespace ctermbg=darkred guibg=darkcyan
-autocmd BufEnter * if &ft != 'help' | match ExtraWhitespace /\s\+$/ | endif
-autocmd BufEnter * if &ft == 'help' | match none /\s\+$/ | endif
-autocmd FileWritePre * :call TrimWhiteSpace()
-autocmd FileAppendPre * :call TrimWhiteSpace()
-autocmd FilterWritePre * :call TrimWhiteSpace()
-autocmd BufWritePre * :call TrimWhiteSpace()
-
-map <F1> :call TrimWhiteSpace()<CR>
-map! <F1> :call TrimWhiteSpace()<CR>
 
 nnoremap <silent> <Leader>l
       \ :if exists('w:long_line_match') <Bar>
@@ -352,13 +242,69 @@ nnoremap <silent> <Leader>l
       \   let w:long_line_match = matchadd('ErrorMsg', '\%>80v.\+', -1) <Bar>
       \ endif<CR>
 
-"cursor line
+" Crosshair cursor line
 set t_Co=256
 set cursorline
 set cursorcolumn
 
 highlight CursorLine cterm=none ctermbg=234
 highlight CursorColumn cterm=none ctermbg=234
+
+" Highlight/remove unwanted white spaces
+highlight ExtraWhitespace ctermbg=darkred guibg=darkcyan
+autocmd BufEnter * if &ft != 'help' | match ExtraWhitespace /\s\+$/ | endif
+autocmd BufEnter * if &ft == 'help' | match none /\s\+$/ | endif
+autocmd FileWritePre * :call TrimWhiteSpace()
+autocmd FileAppendPre * :call TrimWhiteSpace()
+autocmd FilterWritePre * :call TrimWhiteSpace()
+autocmd BufWritePre * :call TrimWhiteSpace()
+
+noremap <F1> :call TrimWhiteSpace()<CR>
+
+" Toggle line number/highlght
+noremap <F2> :set relativenumber! relativenumber?<CR>
+noremap <F3> :set nu! nu?<CR>
+noremap <F4> :set hlsearch! hlsearch?<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Taglist
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <F8> :call ToggleTlist()<CR>
+let Tlist_Ctags_Cmd = '/usr/bin/ctags'
+let Tlist_Use_Right_Window=0
+let Tlist_Show_One_File=1
+let Tlist_File_Fold_Auto_Close=1
+let Tlist_Exit_OnlyWindow=1
+let Tlist_WinWidth=35
+let Tlist_Use_SingleClick=1
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Ctags and Cscope
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Ctags
+set tags=tags;
+set autochdir
+
+" Cscope
+map <F9> :cs reset<CR>
+au BufEnter /* call LoadCscope()
+set csprg=/usr/bin/cscope
+set csto=0
+set cst
+set nocsverb
+set csverb
+
+nmap <C-?>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+nmap <C-?>s :cs find s <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+nmap <C-?>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-?>d :cs find d <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+nmap <C-?>c :cs find c <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+nmap <C-?>t :cs find t <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+nmap <C-?>e :cs find e <C-R>=expand("<cword>")<CR><CR> :copen<CR><CR>
+nmap <C-?>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-?>i :cs find i <C-R>=expand("<cfile>")<CR><CR> :copen<CR><CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
@@ -390,78 +336,47 @@ function! VisualSelection(direction) range
     let @" = l:saved_reg
 endfunction
 
-
 " Returns true if paste mode is enabled
-function! HasPaste()
-    if &paste
-        return 'PASTE MODE  '
-    en
-    return ''
+" function! HasPaste()
+"    if &paste
+"        return 'PASTE MODE  '
+"    en
+"    return ''
+" endfunction
+
+" Remove unwanted white spaces
+function! TrimWhiteSpace()
+    %s/\s*$//
+    ''
+:endfunction
+
+" TlistToggle + mouse at normal mode
+function! ToggleTlist()
+    :TlistToggle
+    call ToggleMouse()
+endfunc
+
+function! ToggleMouse()
+    " check if mouse is enabled
+    if &mouse == 'n'
+        " disable mouse
+        set mouse=
+    else
+        " enable mouse everywhere
+        set mouse=n
+    endif
+endfunc
+
+" For ctags, with the command, 'set tags=tags', vim will look for tags
+" file everywhere starting from the current directory up to the root.
+" This nice tip provides the same 'autoloading' functionality for Cscope.
+function! LoadCscope()
+    let db = findfile("cscope.out", ".;")
+    if (!empty(db))
+        let path = strpart(db, 0, match(db, "/cscope.out$"))
+        set nocscopeverbose " suppress 'duplicate connection' error
+        exe "cs add " . db . " " . path
+        set cscopeverbose
+    endif
 endfunction
-
-" Don't close window, when deleting a buffer
-command! Bclose call <SID>BufcloseCloseIt()
-function! <SID>BufcloseCloseIt()
-   let l:currentBufNum = bufnr("%")
-   let l:alternateBufNum = bufnr("#")
-
-   if buflisted(l:alternateBufNum)
-     buffer #
-   else
-     bnext
-   endif
-
-   if bufnr("%") == l:currentBufNum
-     new
-   endif
-
-   if buflisted(l:currentBufNum)
-     execute("bdelete! ".l:currentBufNum)
-   endif
-endfunction
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Ctags
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <F5> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR>
-set tags=tags;
-set autochdir
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Taglist
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <F6> : Tlist<CR>
-"let Tlist_Auto_Open = 1
-let Tlist_Ctags_Cmd = '/usr/bin/ctags'
-let Tlist_Use_Right_Window=0
-let Tlist_Show_One_File=0
-let Tlist_File_Fold_Auto_Close=1
-let Tlist_Exit_OnlyWindow=1
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Cscope
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set cscopequickfix=s-,c-,d-,i-,t-,e-
-if has("cscope")
-set csprg=/usr/bin/cscope
-set csto=1
-set cst
-set nocsverb
-" add any database in current directory
-if filereadable("cscope.out")
-   cs add cscope.out
-endif
-set csverb
-endif
-
-nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-
 

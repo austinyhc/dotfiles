@@ -4,3 +4,12 @@
 [submodule "bundle/hardtime"]
 	path = bundle/hardtime
 	url = https://github.com/takac/vim-hardtime.git
+[submodule "bundle/nerdtree"]
+	path = bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree
+[submodule "bundle/taglist"]
+	path = bundle/taglist
+	url = https://github.com/vim-scripts/taglist.vim
+[submodule "bundle/airline"]
+	path = bundle/airline
+	url = https://github.com/bling/vim-airline
