@@ -150,6 +150,7 @@ set smarttab
 " 1 tab == 4 spaces
 set shiftwidth=4
 set tabstop=4
+set textwidth=79
 
 " Linebreak on 500 characters
 set lbr
@@ -230,7 +231,8 @@ map <leader>s? z=
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 " Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
+map <leader>v :setlocal paste!<cr>
+map <leader>p :w !python<cr>
 
 nnoremap <silent> <Leader>l
       \ :if exists('w:long_line_match') <Bar>

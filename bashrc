@@ -2,6 +2,12 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# Toolchain to build nanohub firmware
+export PATH="$HOME/.vim/dev/gcc-arm-none-eabi-5_4-2016q2/bin:$PATH"
+
+# Redefine $HOME
+alias mac='cd /media/psf/Home/Workspace'
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -190,6 +196,7 @@ ctags_cscope_func() {
 ## set up for python virtualenv/virtualenvwrapper
 # where to store our virtual envs
 export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 
 # where projects will reside
 export PROJECT_HOME=$HOME/workspace/project_codebase/python_base
@@ -204,9 +211,20 @@ alias rmv='rmvirtualenv'
 alias vin='workon'
 alias vout='deactivate'
 
-
 # Include local bash_extended
 if [ -f ~/.bash_extended ]; then
     . ~/.bash_extended
 fi
 
+function repeat()       # Repeat n times command.
+{
+    local i max
+    max=$1; shift;
+    for ((i=1; i <= max ; i++)); do  # --> C-like syntax
+        eval "$@";
+    done
+}
+
+
+# added by Anaconda2 4.4.0 installer
+export PATH="/home/parallels/anaconda2/bin:$PATH"

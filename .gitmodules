@@ -13,3 +13,6 @@
 [submodule "bundle/airline"]
 	path = bundle/airline
 	url = https://github.com/bling/vim-airline
+[submodule "dev/stlink"]
+	path = dev/stlink
+	url = https://github.com/texane/stlink.git
