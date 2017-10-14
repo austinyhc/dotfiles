@@ -133,6 +133,8 @@ alias reload='source ~/.vim/bashrc'
 alias vimv='vim ~/.vim/vimrc'
 alias vimb='vim ~/.vim/bashrc'
 alias apt-get="sudo apt-get"
+alias fastboot="sudo fastboot"
+alias adb="sudo adb"
 alias u='echo "xserver-xorg-video-intel hold" | sudo dpkg --set-selections && \
               echo "xserver-common hold" | sudo dpkg --set-selections && \
               sudo apt-get update && sudo apt-get dist-upgrade && git -C ~/.vim pull'
@@ -145,12 +147,22 @@ alias poweroff='sudo /sbin/poweroff'
 alias halt='sudo /sbin/halt'
 alias shutdown='sudo /sbin/shutdown'
 
+## d410c related
+alias dbenv='source build/envsetup.sh && lunch msm8916_64-userdebug'
+alias dbre=' fastboot flash aboot ./emmc_appsboot.mbn && \
+             fastboot flash boot ./boot.img           && \
+             fastboot flash system ./system.img       && \
+             fastboot flash userdata ./userdata.img   && \
+             fastboot flash persist ./persist.img     && \
+             fastboot flash recovery ./recovery.img'
 ## typo alias
 alias mkdri='mkdir'
 alias grpe="grep"
 alias abd='adb'
 alias vmi='vim'
 alias c='clear'
+alias sl='ls'
+alias claer='clear'
 
 extract() {
     local c e i

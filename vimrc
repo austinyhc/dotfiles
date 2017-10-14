@@ -14,7 +14,7 @@
 "    -> Editing mappings
 "    -> Spell checking
 "    -> Misc
-"    -> Taglist
+"    -> Tagbar
 "    -> Ctags and Cscope
 "    -> Helper functions
 "
@@ -270,17 +270,14 @@ noremap <F4> :set hlsearch! hlsearch?<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Taglist
+" => Tagbar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <F8> :call ToggleTlist()<CR>
-let Tlist_Ctags_Cmd = '/usr/bin/ctags'
-let Tlist_Use_Right_Window=0
-let Tlist_Show_One_File=1
-let Tlist_File_Fold_Auto_Close=1
-let Tlist_Exit_OnlyWindow=1
-let Tlist_WinWidth=35
-let Tlist_Use_SingleClick=1
+map <leader>t :TagbarOpenAutoClose<cr>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Nerdtree
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>n :NERDTreeToggle<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Ctags and Cscope

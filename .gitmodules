@@ -7,12 +7,12 @@
 [submodule "bundle/nerdtree"]
 	path = bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree
-[submodule "bundle/taglist"]
-	path = bundle/taglist
-	url = https://github.com/vim-scripts/taglist.vim
 [submodule "bundle/airline"]
 	path = bundle/airline
 	url = https://github.com/bling/vim-airline
-[submodule "dev/stlink"]
-	path = dev/stlink
-	url = https://github.com/texane/stlink.git
+[submodule "bundle/fugitive"]
+	path = bundle/fugitive
+	url = http://github.com/tpope/vim-fugitive.git
+[submodule "bundle/bundle/tagbar"]
+	path = bundle/bundle/tagbar
+	url = https://github.com/majutsushi/tagbar
