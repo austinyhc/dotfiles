@@ -10,4 +10,5 @@ Create symlinks:
 
 Upgrading all bundled plugins:
 
-    git submodule foreach git pull origin master
+    (maybe) git submodule init
+    git submodule update
