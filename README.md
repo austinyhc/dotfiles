@@ -4,6 +4,7 @@ Installation:
 
 Create symlinks:
 
+    unlink ~/.bashrc
     ln -s ~/.vim/bashrc ~/.bashrc
     ln -s ~/.vim/vimrc ~/.vimrc
 
