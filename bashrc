@@ -5,9 +5,6 @@
 # Toolchain to build nanohub firmware
 export PATH="$HOME/.vim/dev/gcc-arm-none-eabi-5_4-2016q2/bin:$PATH"
 
-# Redefine $HOME
-alias mac='cd /media/psf/Home/Workspace'
-
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -82,10 +79,11 @@ esac
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
+    alias lg='ls|grep'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
+    alias grep='grep --color=auto --exclude=*tags'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
@@ -148,6 +146,8 @@ alias halt='sudo /sbin/halt'
 alias shutdown='sudo /sbin/shutdown'
 
 ## d410c related
+alias dbkenv='export ARCH=arm64 && export CROSS_COMPILE=~/workspace/410c_codebase/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-'
+alias dbkmake='make KDIR=../../.. CFLAGS_MODULE=-fno-pic'
 alias dbenv='source build/envsetup.sh && lunch msm8916_64-userdebug'
 alias dbre=' fastboot flash aboot ./emmc_appsboot.mbn && \
              fastboot flash boot ./boot.img           && \
@@ -155,6 +155,26 @@ alias dbre=' fastboot flash aboot ./emmc_appsboot.mbn && \
              fastboot flash userdata ./userdata.img   && \
              fastboot flash persist ./persist.img     && \
              fastboot flash recovery ./recovery.img'
+alias dbhal='adb push /home/achen/workspace/410c_codebase/out/target/product/msm8916_64/system/lib64/sensors.native.so system/lib64/hw/sensors.msm8916.so && \
+             adb push /home/achen/workspace/410c_codebase/out/target/product/msm8916_64/system/lib64/sensors.native.so system/lib64/sensors.native.so && \
+             adb shell stop && \
+             adb shell start'
+alias apqenv='source build/envsetup.sh && lunch msm8996-userdebug'
+alias sscenv='export HEXAGON_TOOLS_PREFIX=/home/achen/Qualcomm/HEXAGON_Tools/5.1.05/ && \
+              export SLPI_PREFIX=/home/achen/workspace/slpi_codebase'
+
+alias k='adb shell SNTMfgUtil'
+alias preupdate='adb shell "nanotool -x read &"; sleep 1; \
+    adb shell "echo 00F401 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control"; sleep 1; \
+    adb shell "echo 00F400 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control"; sleep 1; \
+    adb shell nanoapp_cmd reset; sleep 1; \
+    adb shell "echo 009300 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control"; sleep 1; \
+    adb shell "echo 0093C0 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control"; sleep 1; \
+    adb shell cat /sys/android_edge/register_chipid_lsb; sleep 1;'
+
+alias nanolog='repeat 100000 "adb shell ''echo 1 > /sys/class/htc_sensorhub/sensor_hub/dump_log'' " '
+alias killjobs='pids=( $(jobs -p) ); [ -n "$pids" ] && kill -- "${pids[@]/#/-}"'
+
 ## typo alias
 alias mkdri='mkdir'
 alias grpe="grep"
@@ -201,8 +221,9 @@ extract() {
 
 alias haha='ctags_cscope_func'
 ctags_cscope_func() {
-    ctags -R
+    ctags -R --langmap=c++:.ino
     cscope -Rbq
+
 }
 
 ## set up for python virtualenv/virtualenvwrapper
@@ -237,6 +258,32 @@ function repeat()       # Repeat n times command.
     done
 }
 
-
 # added by Anaconda2 4.4.0 installer
 export PATH="/home/parallels/anaconda2/bin:$PATH"
+
+
+alias sntfwv='adb shell cat sys/android_edge/product_config'
+
+alias sntreset='sleep .5 && adb shell "echo 1 > /sys/android_edge/reset" && sleep .5 && \
+                adb shell "echo 009300 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control" && sleep .5 && \
+                adb shell "echo 0093C0 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control" && sleep .5 && \
+                adb shell "echo 009380 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control" && sleep .5 && \
+                adb shell "echo 020000 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control" && sleep .5 && \
+                adb shell "echo 020001 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control" && sleep .5 && \
+                adb shell nanoapp_cmd reset && sleep 1'
+
+alias sntfwu='adb push *.update vendor/firmware/snt8100fsr.update && sleep 1 && \
+              adb shell "echo vendor/firmware/snt8100fsr.update > /sys/android_edge/fwupdate" &&
+              repeat 810 ''adb shell "cat /sys/android_edge/fwupdate"'''
+alias rmlock='adb shell rm -rf /data/vendor/sensor/nanohub_lock'
+alias sntkeydis='adb shell "echo 7 > /sys/keyboard/disable_interrupt" && sleep .2 && \
+                 adb shell "echo 0x07 0x08fd > /sys/android_edge/set_reg" && sleep .2 && \
+                 adb shell "echo 0x10 0xffe1 > /sys/android_edge/set_reg" && sleep .2 && \
+                 adb shell "echo 0x18 0xffe1 > /sys/android_edge/set_reg" && sleep .2 && \
+                 adb shell "echo 0x20 0xffe1 > /sys/android_edge/set_reg"'
+
+alias sntkeyen=' adb shell "echo 0x07 0x08e1 > /sys/android_edge/set_reg" && sleep .2 && \
+                 adb shell "echo 0x10 0x08e1 > /sys/android_edge/set_reg" && sleep .2 && \
+                 adb shell "echo 0x18 0x08e1 > /sys/android_edge/set_reg" && sleep .2 && \
+                 adb shell "echo 0x20 0x08ff > /sys/android_edge/set_reg" && sleep .2 && \
+                 adb shell "echo 0 > /sys/keyboard/disable_interrupt"'
