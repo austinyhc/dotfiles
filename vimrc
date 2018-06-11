@@ -24,6 +24,7 @@
 " => Setup pathogen.vim for pluggin management
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 execute pathogen#infect()
+execute pathogen#helptags()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -101,8 +102,20 @@ set novisualbell
 set t_vb=
 set tm=500
 
-" Set relative line number as default
-" set relativenumber
+" bind Ctrl+<movement> keys to move around the windows, instead of using Ctrl+w + <movement>
+" Every unnecessary keystroke that can be saved is good for your health :)
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+map <c-l> <c-w>l
+map <c-h> <c-w>h
+
+" easier moving of code blocks
+" Try to go into visual mode (v), thenselect several lines of code here and
+" then press ``>`` several times.
+vnoremap < <gv  " better indentation
+vnoremap > >gv  " better indentation
+
+set nofoldenable
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -233,7 +246,6 @@ noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 " Toggle paste mode on and off
 map <leader>v :setlocal paste!<cr>
-map <leader>p :w !python<cr>
 
 nnoremap <silent> <Leader>l
       \ :if exists('w:long_line_match') <Bar>
@@ -271,14 +283,50 @@ noremap <F4> :set hlsearch! hlsearch?<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Tagbar
+" => Hardtime/HardMode
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>t :TagbarOpenAutoClose<cr>
+"let g:hardtime_default_on = 1
+let g:HardMode_level='wannabe'
+autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Nerdtree
+" => python-mode
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:pymode_python = 'python3'
+let g:pymode_options_colorcolumn = 0
+let g:jedi#usages_command = "<leader>z"
+let g:jedi#popup_on_dot = 1
+let g:jedi#popup_select_first = 0
+map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
+
+" Better navigating through omnicomplete option list
+" See http://stackoverflow.com/questions/2170023/how-to-map-keys-for-popup-menu-in-vim
+set completeopt=longest,menuone
+function! OmniPopup(action)
+    if pumvisible()
+        if a:action == 'j'
+            return "\<C-N>"
+        elseif a:action == 'k'
+            return "\<C-P>"
+        endif
+    endif
+    return a:action
+endfunction
+
+inoremap <silent><C-j> <C-R>=OmniPopup('j')<CR>
+inoremap <silent><C-k> <C-R>=OmniPopup('k')<CR>
+
+" Quick quit command
+noremap <leader>e :quit<CR>  " Quit current window
+noremap <leader>E :qa!<CR>   " Quit all windows
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Tagbar/NerdTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <leader>n :NERDTreeToggle<cr>
+map <leader>t :TagbarToggle<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Ctags and Cscope

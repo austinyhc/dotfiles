@@ -92,10 +92,7 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alias cpr='cp -r'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -133,9 +130,10 @@ alias vimb='vim ~/.vim/bashrc'
 alias apt-get="sudo apt-get"
 alias fastboot="sudo fastboot"
 alias adb="sudo adb"
+alias u='sudo apt-get update && sudo apt-get upgrade && git -C ~/.vim pull'
 alias u='echo "xserver-xorg-video-intel hold" | sudo dpkg --set-selections && \
-              echo "xserver-common hold" | sudo dpkg --set-selections && \
-              sudo apt-get update && sudo apt-get dist-upgrade && git -C ~/.vim pull'
+         echo "xserver-common hold" | sudo dpkg --set-selections && \
+         sudo apt-get update && sudo apt-get upgrade && git -C ~/.vim pull'
 alias find="du -a . |grep "
 alias mmd="fortune | cowsay && echo ' '"
 
@@ -144,35 +142,6 @@ alias reboot='sudo /sbin/reboot'
 alias poweroff='sudo /sbin/poweroff'
 alias halt='sudo /sbin/halt'
 alias shutdown='sudo /sbin/shutdown'
-
-## d410c related
-alias dbkenv='export ARCH=arm64 && export CROSS_COMPILE=~/workspace/410c_codebase/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-'
-alias dbkmake='make KDIR=../../.. CFLAGS_MODULE=-fno-pic'
-alias dbenv='source build/envsetup.sh && lunch msm8916_64-userdebug'
-alias dbre=' fastboot flash aboot ./emmc_appsboot.mbn && \
-             fastboot flash boot ./boot.img           && \
-             fastboot flash system ./system.img       && \
-             fastboot flash userdata ./userdata.img   && \
-             fastboot flash persist ./persist.img     && \
-             fastboot flash recovery ./recovery.img'
-alias dbhal='adb push /home/achen/workspace/410c_codebase/out/target/product/msm8916_64/system/lib64/sensors.native.so system/lib64/hw/sensors.msm8916.so && \
-             adb push /home/achen/workspace/410c_codebase/out/target/product/msm8916_64/system/lib64/sensors.native.so system/lib64/sensors.native.so && \
-             adb shell stop && \
-             adb shell start'
-alias apqenv='source build/envsetup.sh && lunch msm8996-userdebug'
-alias sscenv='export HEXAGON_TOOLS_PREFIX=/home/achen/Qualcomm/HEXAGON_Tools/5.1.05/ && \
-              export SLPI_PREFIX=/home/achen/workspace/slpi_codebase'
-
-alias k='adb shell SNTMfgUtil'
-alias preupdate='adb shell "nanotool -x read &"; sleep 1; \
-    adb shell "echo 00F401 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control"; sleep 1; \
-    adb shell "echo 00F400 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control"; sleep 1; \
-    adb shell nanoapp_cmd reset; sleep 1; \
-    adb shell "echo 009300 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control"; sleep 1; \
-    adb shell "echo 0093C0 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control"; sleep 1; \
-    adb shell cat /sys/android_edge/register_chipid_lsb; sleep 1;'
-
-alias nanolog='repeat 100000 "adb shell ''echo 1 > /sys/class/htc_sensorhub/sensor_hub/dump_log'' " '
 alias killjobs='pids=( $(jobs -p) ); [ -n "$pids" ] && kill -- "${pids[@]/#/-}"'
 
 ## typo alias
@@ -226,23 +195,51 @@ ctags_cscope_func() {
 
 }
 
-## set up for python virtualenv/virtualenvwrapper
-# where to store our virtual envs
-export WORKON_HOME=$HOME/.virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+## set up for python pyenv/pyenv-virtualenv
 
 # where projects will reside
-export PROJECT_HOME=$HOME/workspace/project_codebase/python_base
-
-# where is the virtualenvwrapper.sh
-source /usr/local/bin/virtualenvwrapper.sh
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+export WORK_ON="~/.ve"
+export PROJECT_HOME="/media/psf/workspace"
+export PYENV_ROOT="$HOME/.pyenv"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 # quick alias
-alias lsv='lsvirtualenv'
-alias mkv='mkvirtualenv'
-alias rmv='rmvirtualenv'
-alias vin='workon'
-alias vout='deactivate'
+alias lsv='pyenv virtualenvs'
+alias mkv='pyenv virtualenv'
+alias rmv='pyenv uninstall'
+alias vin='pyenv activate'
+alias vout='pyenv deactivate'
+
+function updatePrompt {
+
+    # Styles
+    GREEN='\[\e[0;32m\]'
+    BLUE='\[\e[0;34m\]'
+    RESET='\[\e[0m\]'
+
+    # Base prompt: \W = working dir
+    PROMPT="\W"
+
+    # Current Git repo
+    if type "__git_ps1" > /dev/null 2>&1; then
+        PROMPT="$PROMPT$(__git_ps1 "${GREEN}(%s)${RESET}")"
+    fi
+
+    # Current virtualenv
+    if [[ $VIRTUAL_ENV != "" ]]; then
+        # Strip out the path and just leave the env name
+        PROMPT="$PROMPT${BLUE}{${VIRTUAL_ENV##*/}}${RESET}"
+    fi
+
+    PS1="$PROMPT\$ "
+}
+export -f updatePrompt
+
+# Bash shell executes this function just before displaying the PS1 variable
+export PROMPT_COMMAND='updatePrompt'
 
 # Include local bash_extended
 if [ -f ~/.bash_extended ]; then
@@ -257,33 +254,3 @@ function repeat()       # Repeat n times command.
         eval "$@";
     done
 }
-
-# added by Anaconda2 4.4.0 installer
-export PATH="/home/parallels/anaconda2/bin:$PATH"
-
-
-alias sntfwv='adb shell cat sys/android_edge/product_config'
-
-alias sntreset='sleep .5 && adb shell "echo 1 > /sys/android_edge/reset" && sleep .5 && \
-                adb shell "echo 009300 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control" && sleep .5 && \
-                adb shell "echo 0093C0 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control" && sleep .5 && \
-                adb shell "echo 009380 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control" && sleep .5 && \
-                adb shell "echo 020000 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control" && sleep .5 && \
-                adb shell "echo 020001 > /sys/class/htc_sensorhub/sensor_hub/edge_monitor_control" && sleep .5 && \
-                adb shell nanoapp_cmd reset && sleep 1'
-
-alias sntfwu='adb push *.update vendor/firmware/snt8100fsr.update && sleep 1 && \
-              adb shell "echo vendor/firmware/snt8100fsr.update > /sys/android_edge/fwupdate" &&
-              repeat 810 ''adb shell "cat /sys/android_edge/fwupdate"'''
-alias rmlock='adb shell rm -rf /data/vendor/sensor/nanohub_lock'
-alias sntkeydis='adb shell "echo 7 > /sys/keyboard/disable_interrupt" && sleep .2 && \
-                 adb shell "echo 0x07 0x08fd > /sys/android_edge/set_reg" && sleep .2 && \
-                 adb shell "echo 0x10 0xffe1 > /sys/android_edge/set_reg" && sleep .2 && \
-                 adb shell "echo 0x18 0xffe1 > /sys/android_edge/set_reg" && sleep .2 && \
-                 adb shell "echo 0x20 0xffe1 > /sys/android_edge/set_reg"'
-
-alias sntkeyen=' adb shell "echo 0x07 0x08e1 > /sys/android_edge/set_reg" && sleep .2 && \
-                 adb shell "echo 0x10 0x08e1 > /sys/android_edge/set_reg" && sleep .2 && \
-                 adb shell "echo 0x18 0x08e1 > /sys/android_edge/set_reg" && sleep .2 && \
-                 adb shell "echo 0x20 0x08ff > /sys/android_edge/set_reg" && sleep .2 && \
-                 adb shell "echo 0 > /sys/keyboard/disable_interrupt"'
