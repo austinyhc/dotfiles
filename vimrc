@@ -293,30 +293,6 @@ autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => python-mode
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:pymode_python = 'python3'
-let g:pymode_options_colorcolumn = 0
-let g:jedi#usages_command = "<leader>z"
-let g:jedi#popup_on_dot = 1
-let g:jedi#popup_select_first = 0
-map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
-
-" Better navigating through omnicomplete option list
-" See http://stackoverflow.com/questions/2170023/how-to-map-keys-for-popup-menu-in-vim
-set completeopt=longest,menuone
-function! OmniPopup(action)
-    if pumvisible()
-        if a:action == 'j'
-            return "\<C-N>"
-        elseif a:action == 'k'
-            return "\<C-P>"
-        endif
-    endif
-    return a:action
-endfunction
-
-inoremap <silent><C-j> <C-R>=OmniPopup('j')<CR>
-inoremap <silent><C-k> <C-R>=OmniPopup('k')<CR>
-
 " Quick quit command
 noremap <leader>e :quit<CR>  " Quit current window
 noremap <leader>E :qa!<CR>   " Quit all windows
@@ -331,6 +307,12 @@ map <leader>t :TagbarToggle<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Ctags and Cscope
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has("cscope")
+    if filereadable("cscope.out")
+        cs add cscope.out
+    endif
+endif
+
 " Ctags
 set tags=tags;
 set autochdir
@@ -499,4 +481,3 @@ function! LoadCscope()
         set cscopeverbose
     endif
 endfunction
-
