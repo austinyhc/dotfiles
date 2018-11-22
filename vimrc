@@ -18,6 +18,9 @@
 "    -> Ctags and Cscope
 "    -> Helper functions
 "
+" Reference:
+"    https://dougblack.io/words/a-good-vimrc.html
+"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
