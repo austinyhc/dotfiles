@@ -131,9 +131,6 @@ alias apt-get="sudo apt-get"
 alias fastboot="sudo fastboot"
 alias adb="sudo adb"
 alias u='sudo apt-get update && sudo apt-get upgrade && git -C ~/.vim pull'
-alias u='echo "xserver-xorg-video-intel hold" | sudo dpkg --set-selections && \
-         echo "xserver-common hold" | sudo dpkg --set-selections && \
-         sudo apt-get update && sudo apt-get upgrade && git -C ~/.vim pull'
 alias find="du -a . |grep "
 alias mmd="fortune | cowsay && echo ' '"
 
@@ -198,6 +195,7 @@ ctags_cscope_func() {
 ## set up for python pyenv/pyenv-virtualenv
 
 # where projects will reside
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export WORK_ON="~/.ve"
