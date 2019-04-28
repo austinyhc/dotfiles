@@ -4,6 +4,7 @@
 
 # Toolchain to build nanohub firmware
 export PATH="$HOME/.vim/dev/gcc-arm-none-eabi-5_4-2016q2/bin:$PATH"
+export PATH="/usr/local/cuda-10.1/bin:/usr/local/cuda-10.1/NsightCompute-2019.1${PATH:+:${PATH}}"
 
 # If not running interactively, don't do anything
 case $- in
@@ -133,6 +134,18 @@ alias adb="sudo adb"
 alias u='sudo apt-get update && sudo apt-get upgrade && git -C ~/.vim pull'
 alias find="du -a . |grep "
 alias mmd="fortune | cowsay && echo ' '"
+alias nvdocker="nvidia-docker"
+alias lsd="echo ' ' && docker ps -a && echo ' ' && docker images -a"
+alias din="nvidia-docker run --rm \
+    				  --ipc=host \
+    				  -p 8080:8080 \
+    				  --net=host \
+    				  --name deep-docker \
+    				  -v /home/aorus/workspace/acnbs/:/workspace/acnbs \
+                      -v /home/aoris/workspace/fastaidev/:/workspace/fastaidev \
+    				  -v /home/aorus/.fastai/:/workspace/.fastai \
+    				  -it \
+    				  austin/fastai:0.0.0 bash"
 
 ## reboot / halt / poweroff
 alias reboot='sudo /sbin/reboot'
@@ -191,25 +204,6 @@ ctags_cscope_func() {
     cscope -Rbq
 
 }
-
-## set up for python pyenv/pyenv-virtualenv
-
-# where projects will reside
-export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-export WORK_ON="~/.ve"
-export PROJECT_HOME="/media/psf/workspace"
-export PYENV_ROOT="$HOME/.pyenv"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
-# quick alias
-alias lsv='pyenv virtualenvs'
-alias mkv='pyenv virtualenv'
-alias rmv='pyenv uninstall'
-alias vin='pyenv activate'
-alias vout='pyenv deactivate'
 
 function updatePrompt {
 
