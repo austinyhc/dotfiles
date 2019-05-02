@@ -37,6 +37,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         libncursesw5-dev \
         htop \
         curl \
+        tmux \
         && \
 
 # ==================================================================
@@ -180,8 +181,8 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     $PIP_INSTALL \
         jupyterlab \
         && \
-    jupyter labextension install jupyterlab_vim \
-        && \
+    jupyter labextension install jupyterlab_vim  && \
+    jupyter labextension install @jupyterlab/toc && \
 
 # ==================================================================
 # customization
@@ -190,6 +191,8 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     $PIP_INSTALL \
         librosa \
         nvidia-ml-py3 \
+        comet-ml \
+        seaborn \
         && \
 
 # ==================================================================
