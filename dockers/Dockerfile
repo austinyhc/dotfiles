@@ -11,6 +11,19 @@
 # ==================================================================
 
 FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
+
+#FROM nvidia/cuda:10.0-devel-ubuntu18.04
+#LABEL maintainer "NVIDIA CORPORATION <cudatools@nvidia.com>"
+#ENV CUDNN_VERSION 7.5.1.10
+#ENV CUDNN_VERSION 7.4.1.5
+#LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
+
+#RUN apt-get update && apt-get install -y --no-install-recommends \
+#            libcudnn7=$CUDNN_VERSION-1+cuda10.0 \
+#            libcudnn7-dev=$CUDNN_VERSION-1+cuda10.0 && \
+#    apt-mark hold libcudnn7 && \
+#    rm -rf /var/lib/apt/lists/*
+
 RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     PIP_INSTALL="python -m pip --no-cache-dir install --upgrade" && \
     GIT_CLONE="git clone --depth 10" && \
@@ -103,7 +116,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         typing \
         && \
     $PIP_INSTALL \
-        https://download.pytorch.org/whl/cu100/torch-1.0.1.post2-cp36-cp36m-linux_x86_64.whl \
+        https://download.pytorch.org/whl/cu100/torch-1.1.0-cp36-cp36m-linux_x86_64.whl \
         && \
     $PIP_INSTALL \
         torchvision \
@@ -126,35 +139,6 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         h5py \
         keras \
         && \
-
-# ==================================================================
-# opencv
-# ------------------------------------------------------------------
-
-    DEBIAN_FRONTEND=noninteractive $APT_INSTALL \
-        libatlas-base-dev \
-        libgflags-dev \
-        libgoogle-glog-dev \
-        libhdf5-serial-dev \
-        libleveldb-dev \
-        liblmdb-dev \
-        libprotobuf-dev \
-        libsnappy-dev \
-        protobuf-compiler \
-        && \
-
-    $GIT_CLONE --branch 4.0.1 https://github.com/opencv/opencv ~/opencv && \
-    mkdir -p ~/opencv/build && cd ~/opencv/build && \
-    cmake -D CMAKE_BUILD_TYPE=RELEASE \
-          -D CMAKE_INSTALL_PREFIX=/usr/local \
-          -D WITH_IPP=OFF \
-          -D WITH_CUDA=OFF \
-          -D WITH_OPENCL=OFF \
-          -D BUILD_TESTS=OFF \
-          -D BUILD_PERF_TESTS=OFF \
-          .. && \
-    make -j"$(nproc)" install && \
-    ln -s /usr/local/include/opencv4/opencv2 /usr/local/include/opencv2 && \
 
 # ==================================================================
 # nvtop
@@ -191,7 +175,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     $PIP_INSTALL \
         librosa \
         nvidia-ml-py3 \
-        comet-ml \
+        PyWavelets \
         seaborn \
         && \
 

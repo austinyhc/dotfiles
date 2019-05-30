@@ -2,9 +2,11 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-# Toolchain to build nanohub firmware
-export PATH="$HOME/.vim/dev/gcc-arm-none-eabi-5_4-2016q2/bin:$PATH"
-export PATH="/usr/local/cuda-10.1/bin:/usr/local/cuda-10.1/NsightCompute-2019.1${PATH:+:${PATH}}"
+# Add path for texane/stlink
+export PATH="/home/aorus/.vim/dev/stlink/build/Release:$PATH"
+export PATH="/home/aorus/.vim/dev/stlink/build/Release/src/gdbserver:$PATH"
+export PATH="/usr/share:$PATH"
+
 
 # If not running interactively, don't do anything
 case $- in
@@ -92,6 +94,7 @@ fi
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
+alias lt='tree'
 alias l='ls -CF'
 alias cpr='cp -r'
 
@@ -129,8 +132,6 @@ alias reload='source ~/.vim/bashrc'
 alias vimv='vim ~/.vim/vimrc'
 alias vimb='vim ~/.vim/bashrc'
 alias apt-get="sudo apt-get"
-alias fastboot="sudo fastboot"
-alias adb="sudo adb"
 alias u='sudo apt-get update && sudo apt-get upgrade && git -C ~/.vim pull'
 alias find="du -a . |grep "
 alias mmd="fortune | cowsay && echo ' '"
@@ -140,12 +141,11 @@ alias din="nvidia-docker run --rm \
     				  --ipc=host \
     				  -p 8080:8080 \
     				  --net=host \
-    				  --name deep-docker \
-    				  -v /home/aorus/workspace/acnbs/:/workspace/acnbs \
-                      -v /home/aoris/workspace/fastaidev/:/workspace/fastaidev \
-    				  -v /home/aorus/.fastai/:/workspace/.fastai \
+    				  --name deep-learning \
+                      -v /home/aorus/workspace/:/workspace/ \
+                      -v /home/aorus/workspace/.torch:/root/.torch \
     				  -it \
-    				  austin/fastai:0.0.0 bash"
+    				  austin/archer:0.0.0 bash"
 
 ## reboot / halt / poweroff
 alias reboot='sudo /sbin/reboot'
