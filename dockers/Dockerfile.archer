@@ -12,17 +12,15 @@
 
 FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 
-#FROM nvidia/cuda:10.0-devel-ubuntu18.04
-#LABEL maintainer "NVIDIA CORPORATION <cudatools@nvidia.com>"
-#ENV CUDNN_VERSION 7.5.1.10
-#ENV CUDNN_VERSION 7.4.1.5
-#LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
+# ==================================================================
+# Set the locale
+# ------------------------------------------------------------------
+RUN apt-get clean && \
+    apt-get update --fix-missing && \
+    apt-get install -y locales && \
+    locale-gen en_US.UTF-8
 
-#RUN apt-get update && apt-get install -y --no-install-recommends \
-#            libcudnn7=$CUDNN_VERSION-1+cuda10.0 \
-#            libcudnn7-dev=$CUDNN_VERSION-1+cuda10.0 && \
-#    apt-mark hold libcudnn7 && \
-#    rm -rf /var/lib/apt/lists/*
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US.UTF-8' LC_ALL='en_US.UTF-8'
 
 RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     PIP_INSTALL="python -m pip --no-cache-dir install --upgrade" && \
@@ -32,7 +30,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
            /etc/apt/sources.list.d/cuda.list \
            /etc/apt/sources.list.d/nvidia-ml.list && \
 
-    apt-get update && \
+    apt-get update --fix-missing && \
 
 # ==================================================================
 # tools
@@ -51,6 +49,8 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         htop \
         curl \
         tmux \
+        ctags \
+        cscope \
         && \
 
 # ==================================================================
@@ -61,11 +61,11 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         software-properties-common \
         && \
     add-apt-repository ppa:deadsnakes/ppa && \
-    apt-get update && \
+    apt-get update --fix-missing && \
     DEBIAN_FRONTEND=noninteractive $APT_INSTALL \
         python3.6 \
         python3.6-dev \
-        python3-distutils \
+        python3-distutils-extra \
         && \
     wget -O ~/get-pip.py \
         https://bootstrap.pypa.io/get-pip.py && \
@@ -102,6 +102,36 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
     $PIP_INSTALL \
         jupyter \
         && \
+
+# ==================================================================
+# opencv
+# ------------------------------------------------------------------
+
+    DEBIAN_FRONTEND=noninteractive $APT_INSTALL \
+        libatlas-base-dev \
+        libgflags-dev \
+        libgoogle-glog-dev \
+        libhdf5-serial-dev \
+        libleveldb-dev \
+        liblmdb-dev \
+        libprotobuf-dev \
+        libsnappy-dev \
+        protobuf-compiler \
+        && \
+
+    $GIT_CLONE --branch 4.0.1 https://github.com/opencv/opencv ~/opencv && \
+    mkdir -p ~/opencv/build && cd ~/opencv/build && \
+    cmake -D CMAKE_BUILD_TYPE=RELEASE \
+          -D CMAKE_INSTALL_PREFIX=/usr/local \
+          -D WITH_IPP=OFF \
+          -D WITH_CUDA=OFF \
+          -D WITH_OPENCL=OFF \
+          -D BUILD_TESTS=OFF \
+          -D BUILD_PERF_TESTS=OFF \
+          #-D BUILD_opencv_cudacodec=Off \
+          .. && \
+    make -j"$(nproc)" install && \
+	ln -s /usr/local/include/opencv4/opencv2 /usr/local/include/opencv2 && \
 
 # ==================================================================
 # pytorch \ fastai
@@ -177,6 +207,14 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         nvidia-ml-py3 \
         PyWavelets \
         seaborn \
+		pytest-xdist \
+        pytest-sugar \
+        pytest-repeat \
+        pytest-picked \
+        pytest-forked \
+        pytest-flakefinder \
+        pytest-cov \
+        nbsmoke \
         && \
 
 # ==================================================================

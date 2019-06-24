@@ -2,12 +2,6 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-# Add path for texane/stlink
-export PATH="/home/aorus/.vim/dev/stlink/build/Release:$PATH"
-export PATH="/home/aorus/.vim/dev/stlink/build/Release/src/gdbserver:$PATH"
-export PATH="/usr/share:$PATH"
-
-
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -144,6 +138,10 @@ alias din="nvidia-docker run --rm \
     				  --name deep-learning \
                       -v /home/aorus/workspace/:/workspace/ \
                       -v /home/aorus/workspace/.torch:/root/.torch \
+                      -v /home/aorus/workspace/.keras:/root/.keras \
+                      -v /home/aorus/.fastai:/root/.fastai \
+                      -v /home/aorus/.kaggle:/root/.kaggle \
+                      -v /home/aorus/.vim:/root/.vim \
     				  -it \
     				  austin/archer:0.0.0 bash"
 

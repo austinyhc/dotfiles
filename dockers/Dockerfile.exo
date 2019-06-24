@@ -1,0 +1,48 @@
+# ==================================================================
+# module list
+# ------------------------------------------------------------------
+# nodejs        10.0   (src)
+# lua           5.1    (apk)
+# ==================================================================
+
+FROM node:10-alpine
+
+ENV LUA_VERSION 5.1
+ENV LUA_PACKAGE lua${LUA_VERSION}
+
+#RUN adduser -u 1001 -S aorus -G root && \
+RUN APK_INSTALL="apk add --no-cache" && \
+    DEBIAN_FRONTEND=noninteractive $APK_INSTALL \
+        ${LUA_PACKAGE} \
+        ${LUA_PACKAGE}-dev \
+        luarocks${LUA_VERSION} \
+        libc6-compat \
+        build-base \
+        git \
+        bash \
+        unzip \
+        curl \
+        ruby \
+        ruby-dev \
+        ruby-rake \
+        ruby-io-console \
+        ruby-json \
+        ruby-bundler \
+        ruby-bigdecimal \
+        vim \
+        tmux \
+        && \
+
+
+    ln -s /usr/bin/luarocks-${LUA_VERSION} /usr/bin/luarocks && \
+    echo 'gem: --no-document' > /etc/gemrc && \
+    gem install MuranoCLI -v 3.2.1 && \
+    luarocks install busted && \
+    luarocks install inspect && \
+    luarocks install ldoc && \
+    luarocks install luacheck && \
+    luarocks install luacov && \
+    luarocks install luacov-console && \
+    luarocks install moses && \
+    luarocks install lunajson && \
+    rm -rf /root/.cache/luarocks
