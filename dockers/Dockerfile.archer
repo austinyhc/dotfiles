@@ -15,22 +15,33 @@ FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 # ==================================================================
 # Set the locale
 # ------------------------------------------------------------------
-RUN apt-get clean && \
+RUN apt-get update --fix-missing && \
+    apt-get -y install software-properties-common && \
+    add-apt-repository ppa:apt-fast/stable && \
     apt-get update --fix-missing && \
-    apt-get install -y locales && \
+    echo debconf apt-fast/maxdownloads string 16 | debconf-set-selections && \
+    echo debconf apt-fast/dlflag boolean true | debconf-set-selections    && \
+    echo debconf apt-fast/aptmanager string apt-get | debconf-set-selections && \
+    apt-get -y install apt-fast && \
+    apt-fast clean && \
+    apt-fast update --fix-missing && \
+    apt-fast install -y locales && \
     locale-gen en_US.UTF-8
 
-ENV LANG='en_US.UTF-8' LANGUAGE='en_US.UTF-8' LC_ALL='en_US.UTF-8'
+ENV LANG='en_US.UTF-8' \
+    LANGUAGE='en_US.UTF-8' \
+    LC_ALL='en_US.UTF-8'
+    #PATH=~/s4tf/bin:"${PATH}"
 
-RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
+RUN APT_INSTALL="apt-fast install -y --no-install-recommends" && \
     PIP_INSTALL="python -m pip --no-cache-dir install --upgrade" && \
-    GIT_CLONE="git clone --depth 10" && \
+    GIT_CLONE="git clone --recurse-submodules --depth 10 -j8" && \
 
     rm -rf /var/lib/apt/lists/* \
            /etc/apt/sources.list.d/cuda.list \
            /etc/apt/sources.list.d/nvidia-ml.list && \
 
-    apt-get update --fix-missing && \
+    apt-fast update --fix-missing && \
 
 # ==================================================================
 # tools
@@ -51,6 +62,23 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         tmux \
         ctags \
         cscope \
+        libpython-dev \
+        libpython3-dev \
+        libblocksruntime-dev \
+        ninja-build \
+        clang \
+        uuid-dev \
+        libicu-dev \
+        icu-devtools \
+        libedit-dev \
+        libxml2-dev \
+        libsqlite3-dev \
+        swig \
+        pkg-config \
+        libcurl4-openssl-dev \
+        systemtap-sdt-dev \
+        tzdata \
+        rsync \
         && \
 
 # ==================================================================
@@ -61,7 +89,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         software-properties-common \
         && \
     add-apt-repository ppa:deadsnakes/ppa && \
-    apt-get update --fix-missing && \
+    apt-fast update --fix-missing && \
     DEBIAN_FRONTEND=noninteractive $APT_INSTALL \
         python3.6 \
         python3.6-dev \
@@ -84,6 +112,14 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         matplotlib \
         Cython \
         && \
+
+# ==================================================================
+# dotvim
+# ------------------------------------------------------------------
+    $GIT_CLONE https://github.com/austinyhc/dotvim.git  ~/.vim && \
+    unlink ~/.bashrc && \
+    ln -s ~/.vim/bashrc ~/.bashrc && \
+    ln -s ~/.vim/vimrc ~/.vimrc && \
 
 # ==================================================================
 # boost
@@ -149,9 +185,19 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         https://download.pytorch.org/whl/cu100/torch-1.1.0-cp36-cp36m-linux_x86_64.whl \
         && \
     $PIP_INSTALL \
-        torchvision \
+        https://download.pytorch.org/whl/cu100/torchvision-0.3.0-cp36-cp36m-linux_x86_64.whl \
+        && \
+    $PIP_INSTALL \
         fastai \
         && \
+
+# ==================================================================
+# nvidia/apex for pytorch
+# ------------------------------------------------------------------
+    $GIT_CLONE https://github.com/NVIDIA/apex ~/apex && \
+    cd ~/apex && \
+    $PIP_INSTALL -v --global-option="--cpp_ext" \
+                    --global-option="--cuda_ext" . && \
 
 # ==================================================================
 # tensorflow
@@ -203,6 +249,7 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
 # ------------------------------------------------------------------
 
     $PIP_INSTALL \
+        fire \
         librosa \
         nvidia-ml-py3 \
         PyWavelets \
@@ -218,11 +265,18 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         && \
 
 # ==================================================================
+# swift for tensorflow
+# ------------------------------------------------------------------
+    wget -O ~/s4tf.tar.gz https://storage.googleapis.com/swift-tensorflow-artifacts/releases/v0.4/rc0/swift-tensorflow-RELEASE-0.4-cuda10.0-cudnn7-ubuntu18.04.tar.gz && \
+    tar -zxf ~/s4tf.tar.gz -C ~ && \
+    mv ~/usr ~/s4tf  && \
+
+# ==================================================================
 # config & cleanup
 # ------------------------------------------------------------------
 
     ldconfig && \
-    apt-get clean && \
-    apt-get autoremove && \
+    apt-fast clean && \
+    apt-fast autoremove && \
     rm -rf /var/lib/apt/lists/* /tmp/* ~/*
 

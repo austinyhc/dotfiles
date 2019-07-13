@@ -125,8 +125,9 @@ alias path='echo -e ${PATH//:/\\n}'
 alias reload='source ~/.vim/bashrc'
 alias vimv='vim ~/.vim/vimrc'
 alias vimb='vim ~/.vim/bashrc'
-alias apt-get="sudo apt-get"
-alias u='sudo apt-get update && sudo apt-get upgrade && git -C ~/.vim pull'
+alias apt-get="apt-fast"
+alias apt-fast="sudo apt-fast"
+alias u='sudo apt-fast update && sudo apt-fast upgrade && git -C ~/.vim pull'
 alias find="du -a . |grep "
 alias mmd="fortune | cowsay && echo ' '"
 alias nvdocker="nvidia-docker"
@@ -143,7 +144,21 @@ alias din="nvidia-docker run --rm \
                       -v /home/aorus/.kaggle:/root/.kaggle \
                       -v /home/aorus/.vim:/root/.vim \
     				  -it \
-    				  austin/archer:0.0.0 bash"
+    				  austin/archer:0.1.1 bash"
+
+alias dinexosite="nvidia-docker run --rm \
+    				  --ipc=host \
+    				  -p 8080:8080 \
+    				  --net=host \
+    				  --name deep-learning \
+                      -v /home/aorus/workspace/:/workspace/ \
+                      -v /home/aorus/workspace/.torch:/root/.torch \
+                      -v /home/aorus/workspace/.keras:/root/.keras \
+                      -v /home/aorus/.fastai:/root/.fastai \
+                      -v /home/aorus/.kaggle:/root/.kaggle \
+                      -v /home/aorus/.vim:/root/.vim \
+    				  -it \
+    				  exosite bash"
 
 ## reboot / halt / poweroff
 alias reboot='sudo /sbin/reboot'
@@ -160,41 +175,8 @@ alias vmi='vim'
 alias c='clear'
 alias sl='ls'
 alias claer='clear'
+alias gti='git'
 
-extract() {
-    local c e i
-
-    (($#)) || return
-
-    for i; do
-        c=''
-        e=1
-
-        if [[ ! -r $i ]]; then
-            echo "$0: file is unreadable: \`$i'" >&2
-            continue
-        fi
-
-        case $i in
-            *.t@(gz|lz|xz|b@(2|z?(2))|a@(z|r?(.@(Z|bz?(2)|gz|lzma|xz)))))
-                   c=(bsdtar xvf);;
-            *.7z)  c=(7z x);;
-            *.Z)   c=(uncompress);;
-            *.bz2) c=(bunzip2);;
-            *.exe) c=(cabextract);;
-            *.gz)  c=(gunzip);;
-            *.rar) c=(unrar x);;
-            *.xz)  c=(unxz);;
-            *.zip) c=(unzip);;
-            *)     echo "$0: unrecognized file extension: \`$i'" >&2
-                   continue;;
-        esac
-
-        command "${c[@]}" "$i"
-        ((e = e || $?))
-    done
-    return "$e"
-}
 
 alias haha='ctags_cscope_func'
 ctags_cscope_func() {
@@ -202,34 +184,6 @@ ctags_cscope_func() {
     cscope -Rbq
 
 }
-
-function updatePrompt {
-
-    # Styles
-    GREEN='\[\e[0;32m\]'
-    BLUE='\[\e[0;34m\]'
-    RESET='\[\e[0m\]'
-
-    # Base prompt: \W = working dir
-    PROMPT="\W"
-
-    # Current Git repo
-    if type "__git_ps1" > /dev/null 2>&1; then
-        PROMPT="$PROMPT$(__git_ps1 "${GREEN}(%s)${RESET}")"
-    fi
-
-    # Current virtualenv
-    if [[ $VIRTUAL_ENV != "" ]]; then
-        # Strip out the path and just leave the env name
-        PROMPT="$PROMPT${BLUE}{${VIRTUAL_ENV##*/}}${RESET}"
-    fi
-
-    PS1="$PROMPT\$ "
-}
-export -f updatePrompt
-
-# Bash shell executes this function just before displaying the PS1 variable
-export PROMPT_COMMAND='updatePrompt'
 
 # Include local bash_extended
 if [ -f ~/.bash_extended ]; then
@@ -244,3 +198,154 @@ function repeat()       # Repeat n times command.
         eval "$@";
     done
 }
+
+extract () {
+    for archive in $*; do
+        if [ -f $archive ] ; then
+            case $archive in
+                *.tar.bz2)   tar xvjf $archive    ;;
+                *.tar.gz)    tar xvzf $archive    ;;
+                *.bz2)       bunzip2 $archive     ;;
+                *.rar)       rar x $archive       ;;
+                *.gz)        gunzip $archive      ;;
+                *.tar)       tar xvf $archive     ;;
+                *.tbz2)      tar xvjf $archive    ;;
+                *.tgz)       tar xvzf $archive    ;;
+                *.zip)       unzip $archive       ;;
+                *.Z)         uncompress $archive  ;;
+                *.7z)        7z x $archive        ;;
+                *)           echo "don't know how to extract '$archive'..." ;;
+            esac
+        else
+            echo "'$archive' is not a valid file!"
+        fi
+    done
+}
+
+#######################################################
+# Set the ultimate amazing command prompt
+#######################################################
+
+alias cpu="grep 'cpu ' /proc/stat | awk '{usage=(\$2+\$4)*100/(\$2+\$4+\$5)} END {print usage}' | awk '{printf(\"%.1f\n\", \$1)}'"
+function __setprompt
+{
+	local LAST_COMMAND=$? # Must come first!
+
+	# Define colors
+	local LIGHTGRAY="\033[0;37m"
+	local WHITE="\033[1;37m"
+	local BLACK="\033[0;30m"
+	local DARKGRAY="\033[1;30m"
+	local RED="\033[0;31m"
+	local LIGHTRED="\033[1;31m"
+	local GREEN="\033[0;32m"
+	local LIGHTGREEN="\033[1;32m"
+	local BROWN="\033[0;33m"
+	local YELLOW="\033[1;33m"
+	local BLUE="\033[0;34m"
+	local LIGHTBLUE="\033[1;34m"
+	local MAGENTA="\033[0;35m"
+	local LIGHTMAGENTA="\033[1;35m"
+	local CYAN="\033[0;36m"
+	local LIGHTCYAN="\033[1;36m"
+	local NOCOLOR="\033[0m"
+
+	# Show error exit code if there is one
+	if [[ $LAST_COMMAND != 0 ]]; then
+		# PS1="\[${RED}\](\[${LIGHTRED}\]ERROR\[${RED}\])-(\[${LIGHTRED}\]Exit Code \[${WHITE}\]${LAST_COMMAND}\[${RED}\])-(\[${LIGHTRED}\]"
+		PS1="\[${DARKGRAY}\](\[${LIGHTRED}\]ERROR\[${DARKGRAY}\])-(\[${RED}\]Exit Code \[${LIGHTRED}\]${LAST_COMMAND}\[${DARKGRAY}\])-(\[${RED}\]"
+		if [[ $LAST_COMMAND == 1 ]]; then
+			PS1+="General error"
+		elif [ $LAST_COMMAND == 2 ]; then
+			PS1+="Missing keyword, command, or permission problem"
+		elif [ $LAST_COMMAND == 126 ]; then
+			PS1+="Permission problem or command is not an executable"
+		elif [ $LAST_COMMAND == 127 ]; then
+			PS1+="Command not found"
+		elif [ $LAST_COMMAND == 128 ]; then
+			PS1+="Invalid argument to exit"
+		elif [ $LAST_COMMAND == 129 ]; then
+			PS1+="Fatal error signal 1"
+		elif [ $LAST_COMMAND == 130 ]; then
+			PS1+="Script terminated by Control-C"
+		elif [ $LAST_COMMAND == 131 ]; then
+			PS1+="Fatal error signal 3"
+		elif [ $LAST_COMMAND == 132 ]; then
+			PS1+="Fatal error signal 4"
+		elif [ $LAST_COMMAND == 133 ]; then
+			PS1+="Fatal error signal 5"
+		elif [ $LAST_COMMAND == 134 ]; then
+			PS1+="Fatal error signal 6"
+		elif [ $LAST_COMMAND == 135 ]; then
+			PS1+="Fatal error signal 7"
+		elif [ $LAST_COMMAND == 136 ]; then
+			PS1+="Fatal error signal 8"
+		elif [ $LAST_COMMAND == 137 ]; then
+			PS1+="Fatal error signal 9"
+		elif [ $LAST_COMMAND -gt 255 ]; then
+			PS1+="Exit status out of range"
+		else
+			PS1+="Unknown error code"
+		fi
+		PS1+="\[${DARKGRAY}\])\[${NOCOLOR}\]\n"
+	else
+		PS1=""
+	fi
+
+	# Date
+	PS1+="\[${DARKGRAY}\](\[${YELLOW}\]\$(date +%a) $(date +%b-'%-m')" # Date
+	PS1+="${YELLOW} $(date +'%-I':%M:%S%P)\[${DARKGRAY}\])-" # Time
+
+	# CPU
+	PS1+="(\[${MAGENTA}\]CPU $(cpu)%"
+
+	# Jobs
+	PS1+="\[${DARKGRAY}\]:\[${MAGENTA}\]\j"
+
+	PS1+="\[${DARKGRAY}\])-"
+
+	# User and server
+	local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
+	local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
+	if [ $SSH2_IP ] || [ $SSH_IP ] ; then
+		PS1+="(\[${RED}\]\u@\h"
+	else
+		PS1+="(\[${RED}\]\u"
+	fi
+
+	# Current directory
+	PS1+="\[${DARKGRAY}\]:\[${BROWN}\]\w\[${DARKGRAY}\])-"
+
+	# Total size of files in current directory
+	PS1+="(\[${GREEN}\]$(/bin/ls -lah | /bin/grep -m 1 total | /bin/sed 's/total //')\[${DARKGRAY}\]:"
+
+	# Number of files
+	PS1+="\[${GREEN}\]\$(/bin/ls -A -1 | /usr/bin/wc -l)\[${DARKGRAY}\])"
+
+	# Git
+    if type "__git_ps1" > /dev/null 2>&1; then
+        PS1+="\[${DARKGRAY}\]-"
+        PS1+="$(__git_ps1 "(${CYAN}%s${RESET}")"
+        PS1+="\[${DARKGRAY}\])"
+    fi
+
+	# Skip to the next line
+	PS1+="\n"
+
+	if [[ $EUID -ne 0 ]]; then
+		PS1+="\[${GREEN}\]>\[${NOCOLOR}\] " # Normal user
+	else
+		PS1+="\[${RED}\]>\[${NOCOLOR}\] " # Root user
+	fi
+
+	# PS2 is used to continue a command using the \ character
+	PS2="\[${DARKGRAY}\]>\[${NOCOLOR}\] "
+
+	# PS3 is used to enter a number choice in a script
+	PS3='Please enter a number from above list: '
+
+	# PS4 is used for tracing a script in debug mode
+	PS4='\[${DARKGRAY}\]+\[${NOCOLOR}\] '
+}
+
+PROMPT_COMMAND='__setprompt'
