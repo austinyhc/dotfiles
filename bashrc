@@ -324,9 +324,7 @@ function __setprompt
 
 	# Git
     if type "__git_ps1" > /dev/null 2>&1; then
-        PS1+="\[${DARKGRAY}\]-"
-        PS1+="$(__git_ps1 "(${CYAN}%s${RESET}")"
-        PS1+="\[${DARKGRAY}\])"
+        PS1+="$(__git_ps1 "-(${CYAN}%s${RESET})")"
     fi
 
 	# Skip to the next line
