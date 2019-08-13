@@ -2,6 +2,21 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+
+#######################################################
+# Export for dev tools
+#######################################################
+# ST X-CUBE-AI
+export X_CUBE_AI_DIR=/root/.vim/dev/X-CUBE-AI/4.0.0
+export PATH=$X_CUBE_AI_DIR/Utilities/linux:$PATH
+
+# AWS
+export AWS_DEFAULT_PROFILE=sagemaker
+
+
+#######################################################
+# Basics
+#######################################################
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -116,23 +131,24 @@ fi
 alias ..='cd ..'
 alias ...='cd ../../../'
 alias ....='cd ../../../../'
-alias .....='cd ../../../../'
 alias .2='cd ../../'
 alias .3='cd ../../../'
 alias .4='cd ../../../../'
 alias .5='cd ../../../../..'
+alias .6='cd ../../../../../..'
+alias .7='cd ../../../../../../..'
+alias .8='cd ../../../../../../../..'
 alias path='echo -e ${PATH//:/\\n}'
 alias reload='source ~/.vim/bashrc'
 alias vimv='vim ~/.vim/vimrc'
 alias vimb='vim ~/.vim/bashrc'
 alias apt-get="apt-fast"
-alias apt-fast="sudo apt-fast"
 alias u='sudo apt-fast update && sudo apt-fast upgrade && git -C ~/.vim pull'
 alias find="du -a . |grep "
 alias mmd="fortune | cowsay && echo ' '"
 alias nvdocker="nvidia-docker"
 alias lsd="echo ' ' && docker ps -a && echo ' ' && docker images -a"
-alias din="nvidia-docker run --rm \
+alias archer="nvidia-docker run --rm \
     				  --ipc=host \
     				  -p 8080:8080 \
     				  --net=host \
@@ -141,29 +157,15 @@ alias din="nvidia-docker run --rm \
                       -v /home/aorus/workspace/.torch:/root/.torch \
                       -v /home/aorus/workspace/.keras:/root/.keras \
                       -v /home/aorus/.fastai:/root/.fastai \
+                      -v /home/aorus/.deepml:/root/.deepml \
                       -v /home/aorus/.kaggle:/root/.kaggle \
                       -v /home/aorus/.vim:/root/.vim \
     				  -it \
-    				  austin/archer:0.1.1 bash"
-
-alias dinexosite="nvidia-docker run --rm \
-    				  --ipc=host \
-    				  -p 8080:8080 \
-    				  --net=host \
-    				  --name deep-learning \
-                      -v /home/aorus/workspace/:/workspace/ \
-                      -v /home/aorus/workspace/.torch:/root/.torch \
-                      -v /home/aorus/workspace/.keras:/root/.keras \
-                      -v /home/aorus/.fastai:/root/.fastai \
-                      -v /home/aorus/.kaggle:/root/.kaggle \
-                      -v /home/aorus/.vim:/root/.vim \
-    				  -it \
-    				  exosite bash"
+    				  austin/archer:0.2.1 bash"
 
 ## reboot / halt / poweroff
 alias reboot='sudo /sbin/reboot'
 alias poweroff='sudo /sbin/poweroff'
-alias halt='sudo /sbin/halt'
 alias shutdown='sudo /sbin/shutdown'
 alias killjobs='pids=( $(jobs -p) ); [ -n "$pids" ] && kill -- "${pids[@]/#/-}"'
 
@@ -175,13 +177,12 @@ alias vmi='vim'
 alias c='clear'
 alias sl='ls'
 alias claer='clear'
-alias gti='git'
 
 
 alias haha='ctags_cscope_func'
 ctags_cscope_func() {
     ctags -R --langmap=c++:.ino
-    cscope -Rbq
+    cscope -bqkR
 
 }
 
@@ -223,7 +224,7 @@ extract () {
 }
 
 #######################################################
-# Set the ultimate amazing command prompt
+# Set my customized command prompt
 #######################################################
 
 alias cpu="grep 'cpu ' /proc/stat | awk '{usage=(\$2+\$4)*100/(\$2+\$4+\$5)} END {print usage}' | awk '{printf(\"%.1f\n\", \$1)}'"
@@ -314,7 +315,7 @@ function __setprompt
 	fi
 
 	# Current directory
-	PS1+="\[${DARKGRAY}\]:\[${BROWN}\]\w\[${DARKGRAY}\])-"
+	PS1+="\[${DARKGRAY}\]:\[${BROWN}\]\W\[${DARKGRAY}\])-"
 
 	# Total size of files in current directory
 	PS1+="(\[${GREEN}\]$(/bin/ls -lah | /bin/grep -m 1 total | /bin/sed 's/total //')\[${DARKGRAY}\]:"
@@ -347,3 +348,18 @@ function __setprompt
 }
 
 PROMPT_COMMAND='__setprompt'
+
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+export PATH="/home/aorus/.pyenv/bin:$PATH"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+export WORK_ON="~/.ve"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# quick alias
+alias lsv='pyenv virtualenvs'
+alias mkv='pyenv virtualenv'
+alias rmv='pyenv uninstall'
+alias vin='pyenv activate'
+alias vout='pyenv deactivate'

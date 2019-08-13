@@ -79,6 +79,10 @@ RUN APT_INSTALL="apt-fast install -y --no-install-recommends" && \
         systemtap-sdt-dev \
         tzdata \
         rsync \
+        sox \
+        libsox-dev \
+        libsox-fmt-all \
+        libblocksruntime-dev \
         && \
 
 # ==================================================================
@@ -109,7 +113,7 @@ RUN APT_INSTALL="apt-fast install -y --no-install-recommends" && \
         pandas \
         cloudpickle \
         scikit-learn==0.20.0 \
-        matplotlib \
+        matplotlib==3.1.0 \
         Cython \
         && \
 
@@ -188,6 +192,9 @@ RUN APT_INSTALL="apt-fast install -y --no-install-recommends" && \
         https://download.pytorch.org/whl/cu100/torchvision-0.3.0-cp36-cp36m-linux_x86_64.whl \
         && \
     $PIP_INSTALL \
+        git+https://github.com/pytorch/audio@d92de5b97fc6204db4b1e3ed20c03ac06f5d53f0 \
+        && \
+    $PIP_INSTALL \
         fastai \
         && \
 
@@ -241,8 +248,8 @@ RUN APT_INSTALL="apt-fast install -y --no-install-recommends" && \
     $PIP_INSTALL \
         jupyterlab \
         && \
-    jupyter labextension install jupyterlab_vim  && \
     jupyter labextension install @jupyterlab/toc && \
+    jupyter labextension install jupyterlab_vim  && \
 
 # ==================================================================
 # customization
@@ -267,9 +274,12 @@ RUN APT_INSTALL="apt-fast install -y --no-install-recommends" && \
 # ==================================================================
 # swift for tensorflow
 # ------------------------------------------------------------------
-    wget -O ~/s4tf.tar.gz https://storage.googleapis.com/swift-tensorflow-artifacts/releases/v0.4/rc0/swift-tensorflow-RELEASE-0.4-cuda10.0-cudnn7-ubuntu18.04.tar.gz && \
-    tar -zxf ~/s4tf.tar.gz -C ~ && \
-    mv ~/usr ~/s4tf  && \
+
+    rm -rf /swift && \
+    mkdir -p /swift/toolchain && \
+    wget -nv -O- https://storage.googleapis.com/swift-tensorflow-artifacts/nightlies/latest/swift-tensorflow-DEVELOPMENT-cuda10.0-cudnn7-ubuntu18.04.tar.gz | tar xzf - -C /swift/toolchain && \
+    wget -nv -O- https://storage.googleapis.com/swift-tensorflow-artifacts/nightlies/latest/swift-jupyter.tar.gz | tar xzf - -C /swift && \
+    python3.6 /swift/swift-jupyter/register.py --swift-toolchain /swift/toolchain && \
 
 # ==================================================================
 # config & cleanup
