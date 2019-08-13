@@ -1,4 +1,3 @@
-# Based on https://github.com/frol/docker-alpine-python-machinelearning
 FROM guitarmind/python-nginx
 MAINTAINER austinchen@exosite.com
 
@@ -44,7 +43,7 @@ RUN apk update && \
 	pip install \
 		tensorflow-gpu \
 		h5py \
-		keras
+		keras \
 		&& \
 
     # Cleanup
