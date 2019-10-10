@@ -10,5 +10,5 @@ Create symlinks:
 
 Upgrading all bundled plugins:
 
-    (maybe) git submodule init
-    git submodule update
+    git submodule init
+    git submodule --recursive update
