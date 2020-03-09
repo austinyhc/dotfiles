@@ -1,15 +1,9 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-
-
 #######################################################
 # Export for dev tools
 #######################################################
 # ST X-CUBE-AI
-export X_CUBE_AI_DIR=/root/.vim/dev/X-CUBE-AI/4.0.0
+export X_CUBE_AI_DIR=$HOME/.vim/dev/X-CUBE-AI/5.0.0
 export PATH=$X_CUBE_AI_DIR/Utilities/linux:$PATH
-
 # AWS
 export AWS_DEFAULT_PROFILE=sagemaker
 
@@ -91,17 +85,14 @@ esac
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    alias lg='ls|grep'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
+    alias lg='ll|grep'
     alias grep='grep --color=auto --exclude=*tags'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
 
 # some more ls aliases
-alias ll='ls -alF'
+alias ll='ls -ahlF'
 alias la='ls -A'
 alias lt='tree'
 alias l='ls -CF'
@@ -145,23 +136,12 @@ alias vimb='vim ~/.vim/bashrc'
 alias apt-get="apt-fast"
 alias u='sudo apt-fast update && sudo apt-fast upgrade && git -C ~/.vim pull'
 alias find="du -a . |grep "
+alias cc='clear'
+alias fat=func_who_so_fat
+func_who_so_fat() {
+    sudo find ./ -type f -printf "%s\t%p\n" | sort -rn | head -$1
+}
 alias mmd="fortune | cowsay && echo ' '"
-alias nvdocker="nvidia-docker"
-alias lsd="echo ' ' && docker ps -a && echo ' ' && docker images -a"
-alias archer="nvidia-docker run --rm \
-    				  --ipc=host \
-    				  -p 8080:8080 \
-    				  --net=host \
-    				  --name deep-learning \
-                      -v /home/aorus/workspace/:/workspace/ \
-                      -v /home/aorus/workspace/.torch:/root/.torch \
-                      -v /home/aorus/workspace/.keras:/root/.keras \
-                      -v /home/aorus/.fastai:/root/.fastai \
-                      -v /home/aorus/.deepml:/root/.deepml \
-                      -v /home/aorus/.kaggle:/root/.kaggle \
-                      -v /home/aorus/.vim:/root/.vim \
-    				  -it \
-    				  austin/archer:0.2.1 bash"
 
 ## reboot / halt / poweroff
 alias reboot='sudo /sbin/reboot'
@@ -174,16 +154,14 @@ alias mkdri='mkdir'
 alias grpe="grep"
 alias abd='adb'
 alias vmi='vim'
-alias c='clear'
+alias cc='clear'
 alias sl='ls'
 alias claer='clear'
 
-
 alias haha='ctags_cscope_func'
 ctags_cscope_func() {
-    ctags -R --langmap=c++:.ino
-    cscope -bqkR
-
+    ctags -R
+    #cscope -bqkR
 }
 
 # Include local bash_extended
@@ -349,17 +327,53 @@ function __setprompt
 
 PROMPT_COMMAND='__setprompt'
 
-export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-export PATH="/home/aorus/.pyenv/bin:$PATH"
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-export WORK_ON="~/.ve"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+if [ -f /.dockerenv ]; then
+    echo ""
+else
+    export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    export WORK_ON="~/.ve"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+
+    # virtual environment (ve)
+    alias vels='pyenv virtualenvs'
+    alias vemk='pyenv virtualenv'
+    alias verm='pyenv uninstall'
+    alias vein='pyenv activate'
+    alias veout='pyenv deactivate'
+fi
 
 # quick alias
-alias lsv='pyenv virtualenvs'
-alias mkv='pyenv virtualenv'
-alias rmv='pyenv uninstall'
-alias vin='pyenv activate'
-alias vout='pyenv deactivate'
+# virtual environment (ve)
+alias vels='pyenv virtualenvs'
+alias vemk='pyenv virtualenv'
+alias verm='pyenv uninstall'
+alias vein='pyenv activate'
+alias veout='pyenv deactivate'
+
+# docker
+alias dkls="echo ' ' && docker ps -a && echo ' ' && docker images -a"
+alias dkcc='func_docker_cleanup'
+func_docker_cleanup() {
+    docker ps -q -f status=exited | xargs docker rm
+    docker images -q -f dangling=true | xargs docker rmi
+}
+
+alias archer="nvidia-docker run --rm \
+    --ipc=host \
+    -p 8080:8080 \
+    --net=host \
+    --name deep-learning \
+    -v /home/aorus/workspace/:/workspace/ \
+    -v /home/aorus/workspace/.torch:/root/.torch \
+    -v /home/aorus/workspace/.keras:/root/.keras \
+    -v /home/aorus/.fastai:/root/.fastai \
+    -v /home/aorus/.deepml:/root/.deepml \
+    -v /home/aorus/.kaggle:/root/.kaggle \
+    -v /home/aorus/.vim:/root/.vim \
+    --device=/dev/bus/usb/001 \
+    -it \
+    --privileged \
+    austinyhc/archer:0.3.2 bash"

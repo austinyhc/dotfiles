@@ -31,3 +31,6 @@
 [submodule "bundle/swift.vim"]
 	path = bundle/swift.vim
 	url = https://github.com/keith/swift.vim
+[submodule "bundle/ctags"]
+	path = bundle/ctags
+	url = https://github.com/universal-ctags/ctags
