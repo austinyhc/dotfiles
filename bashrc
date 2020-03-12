@@ -357,8 +357,8 @@ alias veout='pyenv deactivate'
 alias dkls="echo ' ' && docker ps -a && echo ' ' && docker images -a"
 alias dkcc='func_docker_cleanup'
 func_docker_cleanup() {
-    docker ps -q -f status=exited | xargs docker rm
-    docker images -q -f dangling=true | xargs docker rmi
+    docker ps -q -f status=exited |& xargs docker rm
+    docker images -q -f dangling=true |& xargs docker rmi
 }
 
 alias archer="nvidia-docker run --rm \

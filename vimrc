@@ -255,15 +255,18 @@ noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 " Toggle paste mode on and off
 map <leader>v :setlocal paste!<cr>
 
-nnoremap <silent> <Leader>ll
-      \ :if exists('w:long_line_match') <Bar>
-      \   silent! call matchdelete(w:long_line_match) <Bar>
-      \   unlet w:long_line_match <Bar>
-      \ elseif &textwidth > 0 <Bar>
-      \   let w:long_line_match = matchadd('ErrorMsg', '\%>'.&tw.'v.\+', -1) <Bar>
-      \ else <Bar>
-      \   let w:long_line_match = matchadd('ErrorMsg', '\%>80v.\+', -1) <Bar>
-      \ endif<CR>
+nnoremap <leader>ll :call ToggleLongLine()<CR>
+let s:activatedh = 0
+function! ToggleLongLine()
+    if s:activatedh == 0
+        let s:activatedh = 1
+        match Search '\%>80v.\+'
+    else
+        let s:activatedh = 0
+        match none
+    endif
+endfunction
+
 
 " Crosshair cursor line
 set t_Co=256
@@ -293,17 +296,19 @@ noremap <F4> :set hlsearch! hlsearch?<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Hardtime/HardMode
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let g:hardtime_default_on = 1
+let g:hardtime_default_on = 0
 let g:HardMode_level='wannabe'
 autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => python-mode
+" => Markdown
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Quick quit command
 noremap <leader>e :quit<CR>  " Quit current window
 noremap <leader>E :qa!<CR>   " Quit all windows
+
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

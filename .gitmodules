@@ -34,3 +34,12 @@
 [submodule "bundle/ctags"]
 	path = bundle/ctags
 	url = https://github.com/universal-ctags/ctags
+[submodule "bundle/robotframework-vim"]
+	path = bundle/robotframework-vim
+	url = https://github.com/mfukar/robotframework-vim
+[submodule "bundle/typescript-vim"]
+	path = bundle/typescript-vim
+	url = https://github.com/leafgarland/typescript-vim
+[submodule "bundle/vim-markdown"]
+	path = bundle/vim-markdown
+	url = https://github.com/plasticboy/vim-markdown
