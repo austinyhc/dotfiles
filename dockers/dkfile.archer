@@ -10,7 +10,7 @@
 # opencv        4.0.1  (git)
 # ==================================================================
 
-FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
+FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04
 
 # ==================================================================
 # Set the locale
@@ -112,8 +112,9 @@ RUN APT_INSTALL="apt-fast install -y --no-install-recommends" && \
         scipy \
         pandas \
         cloudpickle \
-        scikit-learn==0.20.0 \
-        matplotlib==3.1.0 \
+		scikit-image>=0.14.2 \
+        scikit-learn \
+        matplotlib \
         Cython \
         && \
 
@@ -129,25 +130,17 @@ RUN APT_INSTALL="apt-fast install -y --no-install-recommends" && \
 # boost
 # ------------------------------------------------------------------
 
-    wget -O ~/boost.tar.gz https://dl.bintray.com/boostorg/release/1.65.1/source/boost_1_65_1.tar.gz && \
+	wget -O ~/boost.tar.gz https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.tar.gz && \
     tar -zxf ~/boost.tar.gz -C ~ && \
     cd ~/boost_* && \
     ./bootstrap.sh --with-python=python3.6 && \
-    ./b2 install --prefix=/usr/local && \
-
-# ==================================================================
-# jupyter
-# ------------------------------------------------------------------
-
-    $PIP_INSTALL \
-        jupyter \
-        && \
+    ./b2 install -j"$(nproc)" --prefix=/usr/local && \
 
 # ==================================================================
 # opencv
 # ------------------------------------------------------------------
 
-    DEBIAN_FRONTEND=noninteractive $APT_INSTALL \
+	DEBIAN_FRONTEND=noninteractive $APT_INSTALL \
         libatlas-base-dev \
         libgflags-dev \
         libgoogle-glog-dev \
@@ -159,7 +152,7 @@ RUN APT_INSTALL="apt-fast install -y --no-install-recommends" && \
         protobuf-compiler \
         && \
 
-    $GIT_CLONE --branch 4.0.1 https://github.com/opencv/opencv ~/opencv && \
+    $GIT_CLONE --branch 4.1.2 https://github.com/opencv/opencv ~/opencv && \
     mkdir -p ~/opencv/build && cd ~/opencv/build && \
     cmake -D CMAKE_BUILD_TYPE=RELEASE \
           -D CMAKE_INSTALL_PREFIX=/usr/local \
@@ -168,10 +161,11 @@ RUN APT_INSTALL="apt-fast install -y --no-install-recommends" && \
           -D WITH_OPENCL=OFF \
           -D BUILD_TESTS=OFF \
           -D BUILD_PERF_TESTS=OFF \
-          #-D BUILD_opencv_cudacodec=Off \
+          -D BUILD_DOCS=OFF \
+          -D BUILD_EXAMPLES=OFF \
           .. && \
     make -j"$(nproc)" install && \
-	ln -s /usr/local/include/opencv4/opencv2 /usr/local/include/opencv2 && \
+    ln -s /usr/local/include/opencv4/opencv2 /usr/local/include/opencv2 && \
 
 # ==================================================================
 # pytorch \ fastai
@@ -184,27 +178,12 @@ RUN APT_INSTALL="apt-fast install -y --no-install-recommends" && \
         enum34 \
         pyyaml \
         typing \
+        dataclasses \
+        fastprogress \
         && \
     $PIP_INSTALL \
-        https://download.pytorch.org/whl/cu100/torch-1.1.0-cp36-cp36m-linux_x86_64.whl \
+        torch torchvision\
         && \
-    $PIP_INSTALL \
-        https://download.pytorch.org/whl/cu100/torchvision-0.3.0-cp36-cp36m-linux_x86_64.whl \
-        && \
-    $PIP_INSTALL \
-        git+https://github.com/pytorch/audio@d92de5b97fc6204db4b1e3ed20c03ac06f5d53f0 \
-        && \
-    $PIP_INSTALL \
-        fastai \
-        && \
-
-# ==================================================================
-# nvidia/apex for pytorch
-# ------------------------------------------------------------------
-    $GIT_CLONE https://github.com/NVIDIA/apex ~/apex && \
-    cd ~/apex && \
-    $PIP_INSTALL -v --global-option="--cpp_ext" \
-                    --global-option="--cuda_ext" . && \
 
 # ==================================================================
 # tensorflow
@@ -212,15 +191,6 @@ RUN APT_INSTALL="apt-fast install -y --no-install-recommends" && \
 
     $PIP_INSTALL \
         tensorflow-gpu \
-        && \
-
-# ==================================================================
-# keras
-# ------------------------------------------------------------------
-
-    $PIP_INSTALL \
-        h5py \
-        keras \
         && \
 
 # ==================================================================
@@ -277,8 +247,8 @@ RUN APT_INSTALL="apt-fast install -y --no-install-recommends" && \
 
     rm -rf /swift && \
     mkdir -p /swift/toolchain && \
-    wget -nv -O- https://storage.googleapis.com/swift-tensorflow-artifacts/nightlies/latest/swift-tensorflow-DEVELOPMENT-cuda10.0-cudnn7-ubuntu18.04.tar.gz | tar xzf - -C /swift/toolchain && \
-    wget -nv -O- https://storage.googleapis.com/swift-tensorflow-artifacts/nightlies/latest/swift-jupyter.tar.gz | tar xzf - -C /swift && \
+    wget -nv -O- https://storage.googleapis.com/swift-tensorflow-artifacts/releases/v0.6/rc1/swift-tensorflow-RELEASE-0.6-cuda10.0-cudnn7-ubuntu18.04.tar.gz | tar xzf - -C /swift/toolchain && \
+    wget -nv -O- https://storage.googleapis.com/swift-tensorflow-artifacts/releases/v0.6/rc1/swift-jupyter.tar.gz | tar xzf - -C /swift && \
     python3.6 /swift/swift-jupyter/register.py --swift-toolchain /swift/toolchain && \
 
 # ==================================================================
