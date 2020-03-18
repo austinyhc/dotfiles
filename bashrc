@@ -133,7 +133,7 @@ alias reload='source ~/.vim/bashrc'
 alias vimv='vim ~/.vim/vimrc'
 alias vimb='vim ~/.vim/bashrc'
 alias apt-get="apt-fast"
-alias u='sudo apt-fast update && sudo apt-fast upgrade && git -C ~/.vim pull'
+alias u='sudo apt-fast -y update && sudo apt-fast -y upgrade && git -C ~/.vim pull && make -C ~/.vim update'
 alias find="du -a . |grep "
 alias cc='clear'
 alias fat=func_who_so_fat
@@ -344,20 +344,13 @@ else
     alias veout='pyenv deactivate'
 fi
 
-# quick alias
-# virtual environment (ve)
-alias vels='pyenv virtualenvs'
-alias vemk='pyenv virtualenv'
-alias verm='pyenv uninstall'
-alias vein='pyenv activate'
-alias veout='pyenv deactivate'
-
 # docker
 alias dkls="echo ' ' && docker ps -a && echo ' ' && docker images -a"
 alias dkcc='func_docker_cleanup'
 func_docker_cleanup() {
     docker ps -q -f status=exited |& xargs docker rm
     docker images -q -f dangling=true |& xargs docker rmi
+    docker system prune
 }
 
 alias archer="nvidia-docker run --rm \

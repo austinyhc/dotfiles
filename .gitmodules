@@ -25,9 +25,6 @@
 [submodule "dev/stlink"]
 	path = dev/stlink
 	url = https://github.com/texane/stlink.git
-[submodule "bundle/syntastic"]
-	path = bundle/syntastic
-	url = https://github.com/vim-syntastic/syntastic.git
 [submodule "bundle/swift.vim"]
 	path = bundle/swift.vim
 	url = https://github.com/keith/swift.vim

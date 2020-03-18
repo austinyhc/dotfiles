@@ -50,8 +50,6 @@ let g:mapleader = ","
 " Fast saving
 nmap <leader>w :w!<cr>
 
-let g:syntastic_python_checkers = ['python3']
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -309,7 +307,6 @@ noremap <leader>e :quit<CR>  " Quit current window
 noremap <leader>E :qa!<CR>   " Quit all windows
 
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Tagbar/NerdTree

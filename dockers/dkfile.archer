@@ -247,8 +247,9 @@ RUN APT_INSTALL="apt-fast install -y --no-install-recommends" && \
 
     rm -rf /swift && \
     mkdir -p /swift/toolchain && \
-    wget -nv -O- https://storage.googleapis.com/swift-tensorflow-artifacts/releases/v0.6/rc1/swift-tensorflow-RELEASE-0.6-cuda10.0-cudnn7-ubuntu18.04.tar.gz | tar xzf - -C /swift/toolchain && \
-    wget -nv -O- https://storage.googleapis.com/swift-tensorflow-artifacts/releases/v0.6/rc1/swift-jupyter.tar.gz | tar xzf - -C /swift && \
+    wget -nv -O- https://storage.googleapis.com/swift-tensorflow-artifacts/releases/v0.8/rc1/swift-tensorflow-RELEASE-0.8-cuda10.0-cudnn7-ubuntu18.04.tar.gz | tar xzf - -C /swift/toolchain && \
+
+    wget -nv -O- https://storage.googleapis.com/swift-tensorflow-artifacts/releases/v0.8/rc1/swift-jupyter.tar.gz | tar xzf - -C /swift && \
     python3.6 /swift/swift-jupyter/register.py --swift-toolchain /swift/toolchain && \
 
 # ==================================================================
