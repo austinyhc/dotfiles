@@ -122,7 +122,6 @@ vnoremap > >gv  " better indentation
 
 set nofoldenable
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -230,7 +229,6 @@ endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -286,10 +284,19 @@ autocmd BufWritePre * :call TrimWhiteSpace()
 noremap <F1> :call TrimWhiteSpace()<CR>
 
 " Toggle line number/highlght
+set relativenumber
+set nu
 noremap <F2> :set relativenumber! relativenumber?<CR>
 noremap <F3> :set nu! nu?<CR>
 noremap <F4> :set hlsearch! hlsearch?<CR>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Tabular
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a: :Tabularize /:\zs<CR>
+vmap <Leader>a: :Tabularize /:\zs<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Hardtime/HardMode
