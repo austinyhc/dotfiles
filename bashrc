@@ -7,7 +7,6 @@ export PATH=$X_CUBE_AI_DIR/Utilities/linux:$PATH
 # AWS
 export AWS_DEFAULT_PROFILE=sagemaker
 
-
 #######################################################
 # Basics
 #######################################################
@@ -342,6 +341,9 @@ else
     alias verm='pyenv uninstall'
     alias vein='pyenv activate'
     alias veout='pyenv deactivate'
+
+    export PATH="$HOME/.rbenv/bin:$PATH"
+    eval "$(rbenv init -)"
 fi
 
 # docker
