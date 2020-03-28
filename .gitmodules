@@ -7,9 +7,6 @@
 [submodule "bundle/tagbar"]
 	path = bundle/tagbar
 	url = https://github.com/majutsushi/tagbar.git
-[submodule "bundle/vim-airline"]
-	path = bundle/vim-airline
-	url = https://github.com/vim-airline/vim-airline.git
 [submodule "bundle/vim-hardtime"]
 	path = bundle/vim-hardtime
 	url = https://github.com/takac/vim-hardtime.git
@@ -46,3 +43,12 @@
 [submodule "bundle/vim-vue"]
 	path = bundle/vim-vue
 	url = https://github.com/posva/vim-vue
+[submodule "bundle/vim-rainbow"]
+	path = bundle/vim-rainbow
+	url = https://github.com/frazrepo/vim-rainbow.git
+[submodule "bundle/vim-nerdcommenter"]
+	path = bundle/vim-nerdcommenter
+	url = https://github.com/preservim/nerdcommenter.git
+[submodule "bundle/vim-lightline"]
+	path = bundle/vim-lightline
+	url = https://github.com/itchyny/lightline.vim.git
