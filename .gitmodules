@@ -52,3 +52,6 @@
 [submodule "bundle/vim-lightline"]
 	path = bundle/vim-lightline
 	url = https://github.com/itchyny/lightline.vim.git
+[submodule "bundle/editorconfig-vim"]
+	path = bundle/editorconfig-vim
+	url = https://github.com/editorconfig/editorconfig-vim
