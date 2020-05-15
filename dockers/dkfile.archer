@@ -216,10 +216,10 @@ RUN APT_INSTALL="apt-fast install -y --no-install-recommends" && \
         nodejs \
         && \
     $PIP_INSTALL \
-        jupyterlab \
+        jupyterlab==1.2.11 \
         && \
     jupyter labextension install @jupyterlab/toc && \
-    jupyter labextension install jupyterlab_vim  && \
+    jupyter labextension install @axlair/jupyterlab_vim  && \
 
 # ==================================================================
 # customization

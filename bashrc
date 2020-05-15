@@ -344,6 +344,9 @@ else
 
     export PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init -)"
+
+	export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 fi
 
 # docker
@@ -367,7 +370,6 @@ alias archer="nvidia-docker run --rm \
     -v /home/aorus/.deepml:/root/.deepml \
     -v /home/aorus/.kaggle:/root/.kaggle \
     -v /home/aorus/.vim:/root/.vim \
-    --device=/dev/bus/usb/001 \
     -it \
     --privileged \
-    austinyhc/archer:0.3.2 bash"
+    austinyhc/archer:0.3.0 bash"
