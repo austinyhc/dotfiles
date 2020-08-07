@@ -54,6 +54,8 @@ nmap <leader>w :w!<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set cindent
+set cinoptions=g-1
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 
@@ -207,19 +209,6 @@ set laststatus=2
 " Remap VIM 0 to first non-blank character
 map 0 ^
 
-" Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
-if has("mac") || has("macunix")
-    nmap <D-j> <M-j>
-    nmap <D-k> <M-k>
-    vmap <D-j> <M-j>
-    vmap <D-k> <M-k>
-endif
-
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
   exe "normal mz"
@@ -305,15 +294,12 @@ let g:hardtime_default_on = 0
 let g:HardMode_level='wannabe'
 autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Markdown
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Quick quit command
-noremap <leader>e :quit<CR>  " Quit current window
-noremap <leader>E :qa!<CR>   " Quit all windows
-
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
+noremap <leader>q :quit<CR>  " Quit current window
+noremap <leader>Q :qa!<CR>   " Quit all windows
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Tagbar/NerdTree
@@ -322,9 +308,10 @@ map <leader>n :NERDTreeToggle<cr>
 map <leader>t :TagbarToggle<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Vim-Commentary
+" => delimitMATE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd FileType python setlocal commentstring=#\ %s
+let delimitMate_expand_cr = 1
+let delimitMate_expand_space = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Ctags
@@ -332,6 +319,26 @@ autocmd FileType python setlocal commentstring=#\ %s
 " Ctags
 set tags=tags;
 set autochdir
+
+nmap <A-k> [e
+nmap <A-j> ]e
+vmap <A-k> [egv
+vmap <A-j> ]egv
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Vim-Move
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:move_key_modifier = 'C'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Vim-cpp-enhanced-highlight
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_posix_standard = 1
+let g:cpp_experimental_simple_template_highlight = 1
+let g:cpp_experimental_template_highlight = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions

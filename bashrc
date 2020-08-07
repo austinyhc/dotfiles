@@ -4,6 +4,10 @@
 # ST X-CUBE-AI
 export X_CUBE_AI_DIR=$HOME/.vim/dev/X-CUBE-AI/5.0.0
 export PATH=$X_CUBE_AI_DIR/Utilities/linux:$PATH
+export PATH=/home/austin/workspace/leetcode/deps/boost:$PATH
+export C_INCLUDE_PATH=/home/austin/workspace/leetcode/deps/boost/include:$C_INCLUDE_PATH
+export LD_LIBRARY_PATH=/home/austin/workspace/leetcode/deps/boost/lib:$LD_LIBRARY_PATH
+
 # AWS
 export AWS_DEFAULT_PROFILE=sagemaker
 
@@ -95,6 +99,19 @@ alias la='ls -A'
 alias lt='tree'
 alias l='ls -CF'
 alias cpr='cp -r'
+
+mkcdir(){
+    mkdir "$@"
+    if [ "$1" = "-p" ]; then
+        cd "$2"
+    else
+        cd "$1"
+    fi
+}
+
+alias compile='g++ -std=c++17 -Wshadow -Wall $1 -O2 -Wno-unused-result'
+alias gcompile='g++ -std=c++17 -Wall $1'
+alias build='g++ -std=c++17 -Wshadow -Wall $1 -g -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -341,9 +358,6 @@ else
     alias verm='pyenv uninstall'
     alias vein='pyenv activate'
     alias veout='pyenv deactivate'
-
-    export PATH="$HOME/.rbenv/bin:$PATH"
-    eval "$(rbenv init -)"
 
 	export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
