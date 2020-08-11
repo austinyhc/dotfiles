@@ -22,39 +22,15 @@
 [submodule "dev/stlink"]
 	path = dev/stlink
 	url = https://github.com/texane/stlink.git
-[submodule "bundle/swift.vim"]
-	path = bundle/swift.vim
-	url = https://github.com/keith/swift.vim
 [submodule "bundle/ctags"]
 	path = bundle/ctags
 	url = https://github.com/universal-ctags/ctags
-[submodule "bundle/robotframework-vim"]
-	path = bundle/robotframework-vim
-	url = https://github.com/mfukar/robotframework-vim
-[submodule "bundle/typescript-vim"]
-	path = bundle/typescript-vim
-	url = https://github.com/leafgarland/typescript-vim
-[submodule "bundle/vim-markdown"]
-	path = bundle/vim-markdown
-	url = https://github.com/plasticboy/vim-markdown
 [submodule "bundle/vim-tabular"]
 	path = bundle/vim-tabular
 	url = https://github.com/godlygeek/tabular
-[submodule "bundle/vim-vue"]
-	path = bundle/vim-vue
-	url = https://github.com/posva/vim-vue
-[submodule "bundle/vim-rainbow"]
-	path = bundle/vim-rainbow
-	url = https://github.com/frazrepo/vim-rainbow.git
 [submodule "bundle/vim-lightline"]
 	path = bundle/vim-lightline
 	url = https://github.com/itchyny/lightline.vim.git
-[submodule "bundle/editorconfig-vim"]
-	path = bundle/editorconfig-vim
-	url = https://github.com/editorconfig/editorconfig-vim
-[submodule "bundle/vim-commentary"]
-	path = bundle/vim-commentary
-	url = https://github.com/tpope/vim-commentary
 [submodule "bundle/ReplaceWithRegister"]
 	path = bundle/ReplaceWithRegister
 	url = https://github.com/vim-scripts/ReplaceWithRegister
@@ -70,9 +46,6 @@
 [submodule "bundle/vim-textobj-entire"]
 	path = bundle/vim-textobj-entire
 	url = https://github.com/kana/vim-textobj-entire
-[submodule "bundle/vim-textobj-user"]
-	path = bundle/vim-textobj-user
-	url = https://github.com/kana/vim-textobj-user
 [submodule "bundle/vim-textobj-line"]
 	path = bundle/vim-textobj-line
 	url = https://github.com/kana/vim-textobj-line.git
@@ -82,9 +55,15 @@
 [submodule "bundle/vim-tmux-runner"]
 	path = bundle/vim-tmux-runner
 	url = https://github.com/christoomey/vim-tmux-runner.git
-[submodule "bundle/vim-textobj-python"]
-	path = bundle/vim-textobj-python
-	url = https://github.com/bps/vim-textobj-python.git
-[submodule "bundle/vim-conflicted"]
-	path = bundle/vim-conflicted
-	url = https://github.com/christoomey/vim-conflicted.git
+[submodule "bundle/tcomment_vim"]
+    path = bundle/tcomment_vim
+    url = https://github.com/tomtom/tcomment_vim
+[submodule "bundle/vim-textobj-user"]
+	path = bundle/vim-textobj-user
+	url = https://github.com/kana/vim-textobj-user
+[submodule "bundle/vim-cpp-enhanced-highlight"]
+	path = bundle/vim-cpp-enhanced-highlight
+	url = https://github.com/octol/vim-cpp-enhanced-highlight
+[submodule "bundle/vim-gitgutter"]
+	path = bundle/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter
