@@ -67,3 +67,6 @@
 [submodule "bundle/targets.vim"]
 	path = bundle/targets.vim
 	url = https://github.com/wellle/targets.vim.git
+[submodule "bundle/vim-cpp-modern"]
+	path = bundle/vim-cpp-modern
+	url = https://github.com/bfrg/vim-cpp-modern
