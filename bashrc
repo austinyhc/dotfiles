@@ -1,17 +1,4 @@
 #######################################################
-# Export for dev tools
-#######################################################
-# ST X-CUBE-AI
-export X_CUBE_AI_DIR=$HOME/.vim/dev/X-CUBE-AI/5.0.0
-export PATH=$X_CUBE_AI_DIR/Utilities/linux:$PATH
-export PATH=/home/austin/workspace/leetcode/deps/boost:$PATH
-export C_INCLUDE_PATH=/home/austin/workspace/leetcode/deps/boost/include:$C_INCLUDE_PATH
-export LD_LIBRARY_PATH=/home/austin/workspace/leetcode/deps/boost/lib:$LD_LIBRARY_PATH
-
-# AWS
-export AWS_DEFAULT_PROFILE=sagemaker
-
-#######################################################
 # Basics
 #######################################################
 # If not running interactively, don't do anything
@@ -358,9 +345,6 @@ else
     alias verm='pyenv uninstall'
     alias vein='pyenv activate'
     alias veout='pyenv deactivate'
-
-	export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 fi
 
 # docker
