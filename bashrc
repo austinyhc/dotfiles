@@ -332,19 +332,25 @@ PROMPT_COMMAND='__setprompt'
 if [ -f /.dockerenv ]; then
     echo ""
 else
-    export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    export WORK_ON="~/.ve"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-
-    # virtual environment (ve)
-    alias vels='pyenv virtualenvs'
-    alias vemk='pyenv virtualenv'
-    alias verm='pyenv uninstall'
-    alias vein='pyenv activate'
-    alias veout='pyenv deactivate'
+    # >>> conda initialize >>>
+    # !! Contents within this block are managed by 'conda init' !!
+    __conda_setup="$('/home/austin/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
+    else
+        if [ -f "/home/austin/anaconda3/etc/profile.d/conda.sh" ]; then
+            . "/home/austin/anaconda3/etc/profile.d/conda.sh"
+        else
+            export PATH="/home/austin/anaconda3/bin:$PATH"
+        fi
+    fi
+    unset __conda_setup
+    # <<< conda initialize <<<
+    alias vels='conda env list'
+    alias vemk='conda create -n'
+    alias verm='conda remove -n'
+    alias vein='conda activate'
+    alias veout='conda deactivate'
 fi
 
 # docker
