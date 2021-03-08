@@ -348,7 +348,7 @@ else
     # <<< conda initialize <<<
     alias vels='conda env list'
     alias vemk='conda create -n'
-    alias verm='conda remove -n'
+    alias verm='conda env remove -n'
     alias vein='conda activate'
     alias veout='conda deactivate'
 fi
@@ -377,3 +377,6 @@ alias archer="nvidia-docker run --rm \
     -it \
     --privileged \
     austinyhc/archer:0.3.0 bash"
+
+# the following to ~/.bashrc:
+eval "$(rbenv init -)"
