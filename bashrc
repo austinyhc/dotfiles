@@ -346,11 +346,11 @@ else
     fi
     unset __conda_setup
     # <<< conda initialize <<<
-    alias vels='conda env list'
-    alias vemk='conda create -n'
-    alias verm='conda env remove -n'
-    alias vein='conda activate'
-    alias veout='conda deactivate'
+    alias pvmk='conda create -n'
+    alias pvls='conda env list'
+    alias pvrm='conda env remove -n'
+    alias pvin='conda activate'
+    alias pvout='conda deactivate'
 fi
 
 # docker
@@ -362,25 +362,10 @@ func_docker_cleanup() {
     docker system prune
 }
 
-alias archer="nvidia-docker run --rm \
-    --ipc=host \
-    -p 8080:8080 \
-    --net=host \
-    --name deep-learning \
-    -v /home/aorus/workspace/:/workspace/ \
-    -v /home/aorus/workspace/.torch:/root/.torch \
-    -v /home/aorus/workspace/.keras:/root/.keras \
-    -v /home/aorus/.fastai:/root/.fastai \
-    -v /home/aorus/.deepml:/root/.deepml \
-    -v /home/aorus/.kaggle:/root/.kaggle \
-    -v /home/aorus/.vim:/root/.vim \
-    -it \
-    --privileged \
-    austinyhc/archer:0.3.0 bash"
-
-# the following to ~/.bashrc:
+# initialize rbenv
 eval "$(rbenv init -)"
 
+# initialize nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
