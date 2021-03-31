@@ -22,9 +22,6 @@
 [submodule "dev/stlink"]
 	path = dev/stlink
 	url = https://github.com/texane/stlink.git
-[submodule "bundle/ctags"]
-	path = bundle/ctags
-	url = https://github.com/universal-ctags/ctags
 [submodule "bundle/vim-tabular"]
 	path = bundle/vim-tabular
 	url = https://github.com/godlygeek/tabular
