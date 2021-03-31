@@ -38,3 +38,9 @@ I recommend reading the docs of these plugins to understand them better. Each pl
 - tcomment_vim
 - vim-lightline
 - vim-textobj-entire
+
+## Looking for a remote-first job?
+
+Maintaining this configuration isn't my day job. Daily I am the founder/CEO of SensorAI. You could come and help us build the workspace of the future while living a balanced life (anywhere in the world 🌎🌍🌏). 
+
+PS: Using Vim isn't a requirement 😁
