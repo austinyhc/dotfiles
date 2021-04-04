@@ -25,9 +25,6 @@
 [submodule "bundle/vim-tabular"]
 	path = bundle/vim-tabular
 	url = https://github.com/godlygeek/tabular
-[submodule "bundle/vim-lightline"]
-	path = bundle/vim-lightline
-	url = https://github.com/itchyny/lightline.vim.git
 [submodule "bundle/ReplaceWithRegister"]
 	path = bundle/ReplaceWithRegister
 	url = https://github.com/vim-scripts/ReplaceWithRegister
