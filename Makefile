@@ -1,4 +1,4 @@
-.PHONY: init update
+.PHONY: init update remove
 
 init:
 	unlink $(HOME)/.bashrc
@@ -11,3 +11,8 @@ update:
 	git submodule update --init --recursive --jobs 4
 	git submodule update --remote
 	git submodule status
+
+remove:
+	git submodule deinit $(SUBMODULE)
+	git rm $(SUBMODULE)
+	rm -rf .git/modules/$(SUBMODULE)

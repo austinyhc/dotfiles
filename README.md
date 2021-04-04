@@ -1,4 +1,4 @@
-# My Ultimate Vim/Bash/Tmux
+# My Ultimate Vim Configurations
 
 Over the last 10 years, I have used and tweaked Vim. This configuration is the ultimate vimrc (or at least my version of it).
 
@@ -12,23 +12,21 @@ $ make init
 
 I recommend reading the docs of these plugins to understand them better. Each plugin provides a much better Vim experience.
 
-- ctags
-- vim-cpp-enhanced-highlight
+- [NERD Tree](https://github.com/scrooloose/nerdtree): A tree explorer plugin for vim
+- [Tagbar](https://github.com/preservim/tagbar): A class outline viewer for Vim
+- [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors): Sublime Text style multiple selections for Vim, CTRL+N is remapped to CTRL+S (due to YankRing)
+- [vim-fugitive](https://github.com/tpope/vim-fugitive): A Git wrapper so awesome, it should be illegal
+- [ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim): Fuzzy file, buffer, mru and tag finder. It's mapped to `<Ctrl+F>`
 - vim-move
 - vim-textobj-indent
 - delimitmate
-- vim-cpp-modern
-- vim-multiple-cursors: Sublime Text style multiple selections for Vim, CTRL+N is remapped to CTRL+S (due to YankRing)
 - vim-textobj-user
-- nerdtree: A tree explorer plugin for vim
-- vim-fugitive
 - vim-repeat
 - vim-titlecase
 - ReplaceWithRegister
 - vim-gitgutter
 - vim-surround
 - vim-tmux-navigator
-- tagbar
 - vim-hardtime
 - vim-system-copy
 - vim-tmux-runner
@@ -38,6 +36,13 @@ I recommend reading the docs of these plugins to understand them better. Each pl
 - tcomment_vim
 - vim-lightline
 - vim-textobj-entire
+
+
+
+## Included Color Schemes
+
+- vim-cpp-modern
+- vim-cpp-enhanced-highlight
 
 ## Looking for a remote-first job?
 
