@@ -64,3 +64,6 @@
 [submodule "bundle/vim-anyfold"]
 	path = bundle/vim-anyfold
 	url = https://github.com/pseewald/vim-anyfold
+[submodule "bundle/vim-radical"]
+	path = bundle/vim-radical
+	url = https://github.com/glts/vim-radical.git
