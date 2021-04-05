@@ -8,14 +8,11 @@
 "    -> VIM user interface
 "    -> Colors and Fonts
 "    -> Files and backups
-"    -> Text, tab and indent related
+"    -> Indent
 "    -> Visual selection related
-"    -> Status line
 "    -> Editing mappings
-"    -> Spell checking
 "    -> Misc
-"    -> Tagbar
-"    -> Ctags and Cscope
+"    -> Plugin-related
 "    -> Helper functions
 "
 " Reference:
@@ -147,7 +144,6 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -156,9 +152,8 @@ set nobackup
 set nowb
 set noswapfile
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Text, tab and indent related
+" => Indent
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use spaces instead of tabs
 set expandtab
@@ -180,6 +175,19 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
+""""""""""""""""""""""""""""""
+" => Tab
+""""""""""""""""""""""""""""""
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
+
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+map <leader>te :tabedit <C-r>=expand("%:p:h")<cr>/
+
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 """"""""""""""""""""""""""""""
 " => Visual selection related
@@ -209,19 +217,7 @@ autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 autocmd BufWrite *.md :call DeleteTrailingWS()
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Spell checking
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
-
-" Shortcuts using <leader>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remove the Windows ^M - when the encodings gets messed up
@@ -241,7 +237,6 @@ function! ToggleLongLine()
         match none
     endif
 endfunction
-
 
 " Crosshair cursor line
 set t_Co=256
@@ -270,32 +265,18 @@ noremap <F3> :set nu! nu?<CR>
 noremap <F4> :set hlsearch! hlsearch?<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Tabular
+" => Tagbar/NerdTree
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>n :NERDTreeToggle<cr>
+map <leader>t :TagbarToggle<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-tabular
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <Leader>a= :Tabularize /=<CR>
 vmap <Leader>a= :Tabularize /=<CR>
 nmap <Leader>a: :Tabularize /:\zs<CR>
 vmap <Leader>a: :Tabularize /:\zs<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Hardtime/HardMode
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:hardtime_default_on = 0
-let g:HardMode_level='wannabe'
-autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Markdown
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Quick quit command
-noremap <leader>q :quit<CR>  " Quit current window
-noremap <leader>Q :qa!<CR>   " Quit all windows
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Tagbar/NerdTree
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>n :NERDTreeToggle<cr>
-map <leader>t :TagbarToggle<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => delimitMATE
@@ -304,24 +285,12 @@ let delimitMate_expand_cr = 1
 let delimitMate_expand_space = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Ctags
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Ctags
-set tags=tags;
-set autochdir
-
-nmap <A-k> [e
-nmap <A-j> ]e
-vmap <A-k> [egv
-vmap <A-j> ]egv
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Vim-Move
+" => vim-Move
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:move_key_modifier = 'C'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Vim-cpp-enhanced-highlight
+" => vim-cpp-enhanced-highlight
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1

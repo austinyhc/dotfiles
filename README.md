@@ -1,6 +1,8 @@
-# My Ultimate Vim Configurations
+![ultimate-vim-config](img/ultimate-vim-config.png)
 
-Over the last 10 years, I have used and tweaked Vim. This configuration is the ultimate vimrc (or at least my version of it).
+---
+
+Over the last 10 years, I have used and tweaked Vim. This configuration is the ultimate vim configuration or at least my version of it.
 
 ## Installation
 
@@ -8,39 +10,31 @@ Over the last 10 years, I have used and tweaked Vim. This configuration is the u
 $ git clone --depth=1 https://github.com/austinyhc/dotvim.git ~/.vim
 $ make init
 ```
-## Included Plugins
+## Integration Plugins
 
 I recommend reading the docs of these plugins to understand them better. Each plugin provides a much better Vim experience.
 
-- [NERD Tree](https://github.com/scrooloose/nerdtree): A tree explorer plugin for vim
-
-- [Tagbar](https://github.com/preservim/tagbar): A class outline viewer for Vim
-
+- [nerdtree](https://github.com/scrooloose/nerdtree): A tree explorer plugin for vim
+- [tagbar](https://github.com/preservim/tagbar): A class outline viewer for Vim
 - [vim-fugitive](https://github.com/tpope/vim-fugitive): Fugitive is the premier Vim plugin for Git. Or maybe it's the premier Git plugin for Vim.
-
 - [ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim): Fuzzy file, buffer, mru and tag finder. It's mapped to `<Ctrl+F>`
-
 - [delimitMate](https://github.com/Raimondi/delimitMate): Vim plugin, provides insert mode auto-completion for quotes, parens, brackets, etc.
+- [vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator): Seamless navigation between tmux panes and vim splits 
+- [vim-tmux-runner](https://github.com/christoomey/vim-tmux-runner): Vim and tmux, sittin' in a tree... 
 
-- [tcomment_vim](https://github.com/tomtom/tcomment_vim): An extensible & universal comment vim-plugin that also handles native vim motions
+## Color Scheme Plugins
 
-- ReplaceWithRegister
+- [vim-cpp-modern](https://github.com/bfrg/vim-cpp-modern): Extended Vim syntax highlighting for C and C++ (C++11/14/17/20) 
+- [vim-cpp-enhanced-highlight](https://github.com/octol/vim-cpp-enhanced-highlight): Additional Vim syntax highlighting for C++ (including C++11/14/17)
 
-- vim-system-copy
-
-
-
-## Included Color Schemes
-
-- vim-cpp-modern
-- vim-cpp-enhanced-highlight
-
-## Included Commands
+## Command Plugins
 
 - [targets.vim](https://github.com/wellle/targets.vim): Vim plugin that provides additional text objects
+- [ReplaceWithRegister](https://github.com/vim-scripts/ReplaceWithRegister): Replace text with the contents of a register
 - [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors): Sublime Text style multiple selections for Vim, CTRL+N is remapped to CTRL+S (due to YankRing)
 - [vim-move](https://github.com/matze/vim-move): Plugin to move lines and selections up and down
 - [vim-titlecase](https://github.com/christoomey/vim-titlecase): Teach Vim about titlecase, with support for motions and text objects
+- [tcomment_vim](https://github.com/tomtom/tcomment_vim): An extensible & universal comment vim-plugin that also handles native vim motions
 - vim-repeat
 - vim-textobj-indent
 - vim-textobj-entire
@@ -48,11 +42,93 @@ I recommend reading the docs of these plugins to understand them better. Each pl
 - vim-textobj-user
 - vim-surround
 - [vim-tabular](http://vimcasts.org/episod): Vim script for text filtering and alignment
+- [vim-system-copy](https://github.com/christoomey/vim-system-copy): Vim plugin for copying to the system clipboard with text-objects and motions
 
-## Included Tmux-related
+## Key Mappings
 
-- vim-tmux-navigator
-- vim-tmux-runner
+The [leader](http://learnvimscriptthehardway.stevelosh.com/chapters/06.html#leader) is `,`, so whenever you see `<leader>` it means `,`.
+
+### Normal mode mappings
+
+Fast saving of a buffer (`<leader>w`):
+
+```
+nmap <leader>w :w!<cr>
+```
+
+Useful mappings for managing tabs:
+
+```
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove 
+
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+map <leader>te :tabedit <C-r>=expand("%:p:h")<cr>/
+```
+
+### Plugin related mappings
+
+Open [bufexplorer](https://github.com/vim-scripts/bufexplorer.zip) to see and manage the current buffers (`<leader>o`):
+
+```
+map <leader>o :BufExplorer<cr>
+```
+
+Open [ctrlp.vim](https://github.com/kien/ctrlp.vim) plugin to quickly find a file or a buffer (`<leader>j` or `<ctrl>f`):
+
+```
+" Quickly find and open a file in the CWD
+let g:ctrlp_map = '<C-f>'
+
+" Quickly find and open a recently opened file
+map <leader>f :MRU<CR>
+
+" Quickly find and open a buffer
+map <leader>b :CtrlPBuffer<cr>
+```
+
+[NERD Tree](https://github.com/scrooloose/nerdtree) mappings:
+
+```
+map <leader>nn :NERDTreeToggle<cr>
+map <leader>nb :NERDTreeFromBookmark 
+map <leader>nf :NERDTreeFind<cr>
+```
+
+[vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors) mappings to manage multiple cursors at once:
+
+```
+let g:multi_cursor_start_word_key      = '<C-s>'
+let g:multi_cursor_select_all_word_key = '<A-s>'
+let g:multi_cursor_start_key           = 'g<C-s>'
+let g:multi_cursor_select_all_key      = 'g<A-s>'
+let g:multi_cursor_next_key            = '<C-s>'
+let g:multi_cursor_prev_key            = '<C-p>'
+let g:multi_cursor_skip_key            = '<C-x>'
+let g:multi_cursor_quit_key            = '<Esc>'
+```
+
+### Cope
+
+Query `:help cope` if you are unsure what cope is. It's super useful!
+
+When you search with `Ack.vim`, display your results in cope by doing: `<leader>cc`
+
+To go to the next search result do: `<leader>n`
+
+To go to the previous search results do: `<leader>p`
+
+Cope mappings:
+
+```
+map <leader>cc :botright cope<cr>
+map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
+map <leader>n :cn<cr>
+map <leader>p :cp<cr>
+```
 
 ## Looking for a remote-first job?
 
