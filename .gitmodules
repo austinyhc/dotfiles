@@ -7,9 +7,6 @@
 [submodule "bundle/tagbar"]
 	path = bundle/tagbar
 	url = https://github.com/majutsushi/tagbar.git
-[submodule "bundle/vim-multiple-cursors"]
-	path = bundle/vim-multiple-cursors
-	url = https://github.com/terryma/vim-multiple-cursors.git
 [submodule "bundle/vim-repeat"]
 	path = bundle/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
@@ -70,3 +67,6 @@
 [submodule "bundle/vim-magnum"]
 	path = bundle/vim-magnum
 	url = https://github.com/glts/vim-magnum.git
+[submodule "bundle/vim-visual-multi"]
+	path = bundle/vim-visual-multi
+	url = https://github.com/mg979/vim-visual-multi.git
