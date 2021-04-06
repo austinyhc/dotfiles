@@ -14,5 +14,5 @@ update:
 
 remove:
 	git submodule deinit $(SUBMODULE)
-	git rm $(SUBMODULE)
+	git rm -r $(SUBMODULE)
 	rm -rf .git/modules/$(SUBMODULE)
