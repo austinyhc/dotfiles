@@ -267,7 +267,10 @@ noremap <F4> :set hlsearch! hlsearch?<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Tagbar/NerdTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>n :NERDTreeToggle<cr>
+map <leader>nn :NERDTreeToggle<cr>
+map <leader>nb :NERDTreeFromBookmark
+map <leader>nf :NERDTreeFind<cr>
+
 map <leader>t :TagbarToggle<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -307,6 +310,20 @@ let g:cpp_no_function_highlight = 1
 filetype plugin indent on
 autocmd Filetype * AnyFoldActivate
 set foldlevel=99
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => ctrlp
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ctrlp_map = '<C-f>'
+map <leader>j :CtrlP<cr>
+map <C-b> :CtrlPBuffer<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-system-copy
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:system_copy#copy_command='xclip -sel clipboard'
+let g:system_copy#paste_command='xclip -sel clipboard -o'
+let g:system_copy_silent = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
