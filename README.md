@@ -41,6 +41,8 @@ I recommend reading the docs of these plugins to understand them better. Each pl
 - vim-indent-object
 - vim-textobj-user
 - vim-surround
+- [vim-radical](https://github.com/glts/vim-radical): radical.vim ✊ Convert decimal, hex, octal, binary number representations 
+- [vim-magnum](https://github.com/glts/vim-magnum): Pure Vim script big integer library
 - [vim-tabular](http://vimcasts.org/episod): Vim script for text filtering and alignment
 - [vim-system-copy](https://github.com/christoomey/vim-system-copy): Vim plugin for copying to the system clipboard with text-objects and motions
 
