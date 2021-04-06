@@ -19,6 +19,8 @@ I recommend reading the docs of these plugins to understand them better. Each pl
 - [vim-fugitive](https://github.com/tpope/vim-fugitive): Fugitive is the premier Vim plugin for Git. Or maybe it's the premier Git plugin for Vim.
 - [ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim): Fuzzy file, buffer, mru and tag finder. It's mapped to `<Ctrl+F>`
 - [delimitMate](https://github.com/Raimondi/delimitMate): Vim plugin, provides insert mode auto-completion for quotes, parens, brackets, etc.
+- [vim-visual-multi](https://github.com/mg979/vim-visual-multi): Multiple cursors plugin for vim/neovim
+- [vim-move](https://github.com/matze/vim-move): Plugin to move lines and selections up and down
 - [vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator): Seamless navigation between tmux panes and vim splits 
 - [vim-tmux-runner](https://github.com/christoomey/vim-tmux-runner): Vim and tmux, sittin' in a tree... 
 
@@ -31,20 +33,14 @@ I recommend reading the docs of these plugins to understand them better. Each pl
 
 - [targets.vim](https://github.com/wellle/targets.vim): Vim plugin that provides additional text objects
 - [ReplaceWithRegister](https://github.com/vim-scripts/ReplaceWithRegister): Replace text with the contents of a register
-- [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors): Sublime Text style multiple selections for Vim, CTRL+N is remapped to CTRL+S (due to YankRing)
-- [vim-move](https://github.com/matze/vim-move): Plugin to move lines and selections up and down
 - [vim-titlecase](https://github.com/christoomey/vim-titlecase): Teach Vim about titlecase, with support for motions and text objects
 - [tcomment_vim](https://github.com/tomtom/tcomment_vim): An extensible & universal comment vim-plugin that also handles native vim motions
-- vim-repeat
-- vim-textobj-indent
-- vim-textobj-entire
-- vim-indent-object
-- vim-textobj-user
-- vim-surround
+- [vim-repeat](https://github.com/tpope/vim-repeat): Enable repeating supported plugin maps with "."
 - [vim-radical](https://github.com/glts/vim-radical): radical.vim ✊ Convert decimal, hex, octal, binary number representations 
 - [vim-magnum](https://github.com/glts/vim-magnum): Pure Vim script big integer library
 - [vim-tabular](http://vimcasts.org/episod): Vim script for text filtering and alignment
 - [vim-system-copy](https://github.com/christoomey/vim-system-copy): Vim plugin for copying to the system clipboard with text-objects and motions
+- [vim-textobj-user](https://github.com/kana/vim-textobj-user): Create your own text objects
 
 ## Key Mappings
 
@@ -98,38 +94,6 @@ map <leader>b :CtrlPBuffer<cr>
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark 
 map <leader>nf :NERDTreeFind<cr>
-```
-
-[vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors) mappings to manage multiple cursors at once:
-
-```
-let g:multi_cursor_start_word_key      = '<C-s>'
-let g:multi_cursor_select_all_word_key = '<A-s>'
-let g:multi_cursor_start_key           = 'g<C-s>'
-let g:multi_cursor_select_all_key      = 'g<A-s>'
-let g:multi_cursor_next_key            = '<C-s>'
-let g:multi_cursor_prev_key            = '<C-p>'
-let g:multi_cursor_skip_key            = '<C-x>'
-let g:multi_cursor_quit_key            = '<Esc>'
-```
-
-### Cope
-
-Query `:help cope` if you are unsure what cope is. It's super useful!
-
-When you search with `Ack.vim`, display your results in cope by doing: `<leader>cc`
-
-To go to the next search result do: `<leader>n`
-
-To go to the previous search results do: `<leader>p`
-
-Cope mappings:
-
-```
-map <leader>cc :botright cope<cr>
-map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
-map <leader>n :cn<cr>
-map <leader>p :cp<cr>
 ```
 
 ## Looking for a remote-first job?
