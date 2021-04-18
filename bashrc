@@ -207,7 +207,6 @@ extract () {
 # Set my customized command prompt
 #######################################################
 
-alias cpu="grep 'cpu ' /proc/stat | awk '{usage=(\$2+\$4)*100/(\$2+\$4+\$5)} END {print usage}' | awk '{printf(\"%.1f\n\", \$1)}'"
 function __setprompt
 {
 	local LAST_COMMAND=$? # Must come first!
@@ -233,7 +232,6 @@ function __setprompt
 
 	# Show error exit code if there is one
 	if [[ $LAST_COMMAND != 0 ]]; then
-		# PS1="\[${RED}\](\[${LIGHTRED}\]ERROR\[${RED}\])-(\[${LIGHTRED}\]Exit Code \[${WHITE}\]${LAST_COMMAND}\[${RED}\])-(\[${LIGHTRED}\]"
 		PS1="\[${DARKGRAY}\](\[${LIGHTRED}\]ERROR\[${DARKGRAY}\])-(\[${RED}\]Exit Code \[${LIGHTRED}\]${LAST_COMMAND}\[${DARKGRAY}\])-(\[${RED}\]"
 		if [[ $LAST_COMMAND == 1 ]]; then
 			PS1+="General error"
@@ -277,25 +275,8 @@ function __setprompt
 	PS1+="\[${DARKGRAY}\](\[${YELLOW}\]\$(date +%a) $(date +%b-'%-m')" # Date
 	PS1+="${YELLOW} $(date +'%-I':%M:%S%P)\[${DARKGRAY}\])-" # Time
 
-	# CPU
-	PS1+="(\[${MAGENTA}\]CPU $(cpu)%"
-
-	# Jobs
-	PS1+="\[${DARKGRAY}\]:\[${MAGENTA}\]\j"
-
-	PS1+="\[${DARKGRAY}\])-"
-
-	# User and server
-	local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
-	local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
-	if [ $SSH2_IP ] || [ $SSH_IP ] ; then
-		PS1+="(\[${RED}\]\u@\h"
-	else
-		PS1+="(\[${RED}\]\u"
-	fi
-
 	# Current directory
-	PS1+="\[${DARKGRAY}\]:\[${BROWN}\]\W\[${DARKGRAY}\])-"
+    PS1+="\[${DARKGRAY}\](\[${BROWN}\]\w\[${DARKGRAY}\])-"
 
 	# Total size of files in current directory
 	PS1+="(\[${GREEN}\]$(/bin/ls -lah | /bin/grep -m 1 total | /bin/sed 's/total //')\[${DARKGRAY}\]:"
@@ -303,9 +284,14 @@ function __setprompt
 	# Number of files
 	PS1+="\[${GREEN}\]\$(/bin/ls -A -1 | /usr/bin/wc -l)\[${DARKGRAY}\])"
 
+	# venv
+    if [ ! -z "$CONDA_DEFAULT_ENV"  ]; then
+        PS1+="-(\[${CYAN}\]$CONDA_DEFAULT_ENV\[${DARKGRAY}\])"
+    fi
+
 	# Git
     if type "__git_ps1" > /dev/null 2>&1; then
-        PS1+="$(__git_ps1 "-(${CYAN}%s${RESET})")"
+        PS1+="$(__git_ps1 "-(\[${MAGENTA}\]%s\[${DARKGRAY}\])")"
     fi
 
 	# Skip to the next line
@@ -334,14 +320,14 @@ if [ -f /.dockerenv ]; then
 else
     # >>> conda initialize >>>
     # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$('/home/austin/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+    __conda_setup="$('$HOME/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
     if [ $? -eq 0 ]; then
         eval "$__conda_setup"
     else
-        if [ -f "/home/austin/anaconda3/etc/profile.d/conda.sh" ]; then
-            . "/home/austin/anaconda3/etc/profile.d/conda.sh"
+        if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
+            . "$HOME/anaconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
         else
-            export PATH="/home/austin/anaconda3/bin:$PATH"
+            export PATH="/home/austin/anaconda3/bin:$PATH"  # commented out by conda initialize
         fi
     fi
     unset __conda_setup
