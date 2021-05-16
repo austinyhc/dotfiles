@@ -13,6 +13,6 @@ update:
 	git submodule status
 
 remove:
-	git submodule deinit $(SUBMODULE)
+	git submodule deinit -f $(SUBMODULE)
 	git rm -r $(SUBMODULE)
 	rm -rf .git/modules/$(SUBMODULE)
