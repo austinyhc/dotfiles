@@ -326,6 +326,11 @@ let g:system_copy#paste_command='xclip -sel clipboard -o'
 let g:system_copy_silent = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => dvc
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd! BufNewFile,BufRead Dvcfile,*.dvc,dvc.lock setfiletype yaml
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! CmdLine(str)
