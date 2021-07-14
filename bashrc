@@ -332,11 +332,6 @@ else
     fi
     unset __conda_setup
     # <<< conda initialize <<<
-    alias pvmk='conda create -n'
-    alias pvls='conda env list'
-    alias pvrm='conda env remove -n'
-    alias pvin='conda activate'
-    alias pvout='conda deactivate'
 fi
 
 # docker
@@ -347,3 +342,7 @@ func_docker_cleanup() {
     docker images -q -f dangling=true |& xargs docker rmi
     docker system prune
 }
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
