@@ -315,30 +315,6 @@ function __setprompt
 
 PROMPT_COMMAND='__setprompt'
 
-if [ -f /.dockerenv ]; then
-    echo ""
-else
-    # >>> conda initialize >>>
-    # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$('$HOME/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-        eval "$__conda_setup"
-    else
-        if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
-            . "$HOME/anaconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
-        else
-            export PATH="/home/austin/anaconda3/bin:$PATH"  # commented out by conda initialize
-        fi
-    fi
-    unset __conda_setup
-    # <<< conda initialize <<<
-    alias pvmk='conda create -n'
-    alias pvls='conda env list'
-    alias pvrm='conda env remove -n'
-    alias pvin='conda activate'
-    alias pvout='conda deactivate'
-fi
-
 # docker
 alias dkls="echo ' ' && docker ps -a && echo ' ' && docker images -a"
 alias dkcc='func_docker_cleanup'
@@ -347,3 +323,22 @@ func_docker_cleanup() {
     docker images -q -f dangling=true |& xargs docker rmi
     docker system prune
 }
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('$HOME/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/anaconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
+    else
+        export PATH="/home/austin/anaconda3/bin:$PATH"  # commented out by conda initialize
+    fi
+fi
+unset __conda_setup
