@@ -7,8 +7,8 @@ Over the last 10 years, I have used and tweaked Vim. This configuration is the u
 ## Installation
 
 ```bash
-$ git clone --depth=1 https://github.com/austinyhc/dotvim.git ~/.vim
-$ make init
+git clone --recurse-submodules -j8 git@github.com:austinyhc/dotvim.git ~/.vim
+make init
 ```
 ## Integration Plugins
 
@@ -21,12 +21,12 @@ I recommend reading the docs of these plugins to understand them better. Each pl
 - [delimitMate](https://github.com/Raimondi/delimitMate): Vim plugin, provides insert mode auto-completion for quotes, parens, brackets, etc.
 - [vim-visual-multi](https://github.com/mg979/vim-visual-multi): Multiple cursors plugin for vim/neovim
 - [vim-move](https://github.com/matze/vim-move): Plugin to move lines and selections up and down
-- [vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator): Seamless navigation between tmux panes and vim splits 
-- [vim-tmux-runner](https://github.com/christoomey/vim-tmux-runner): Vim and tmux, sittin' in a tree... 
+- [vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator): Seamless navigation between tmux panes and vim splits
+- [vim-tmux-runner](https://github.com/christoomey/vim-tmux-runner): Vim and tmux, sittin' in a tree...
 
 ## Color Scheme Plugins
 
-- [vim-cpp-modern](https://github.com/bfrg/vim-cpp-modern): Extended Vim syntax highlighting for C and C++ (C++11/14/17/20) 
+- [vim-cpp-modern](https://github.com/bfrg/vim-cpp-modern): Extended Vim syntax highlighting for C and C++ (C++11/14/17/20)
 - [vim-cpp-enhanced-highlight](https://github.com/octol/vim-cpp-enhanced-highlight): Additional Vim syntax highlighting for C++ (including C++11/14/17)
 
 ## Command Plugins
@@ -36,7 +36,7 @@ I recommend reading the docs of these plugins to understand them better. Each pl
 - [vim-titlecase](https://github.com/christoomey/vim-titlecase): Teach Vim about titlecase, with support for motions and text objects
 - [tcomment_vim](https://github.com/tomtom/tcomment_vim): An extensible & universal comment vim-plugin that also handles native vim motions
 - [vim-repeat](https://github.com/tpope/vim-repeat): Enable repeating supported plugin maps with "."
-- [vim-radical](https://github.com/glts/vim-radical): radical.vim ✊ Convert decimal, hex, octal, binary number representations 
+- [vim-radical](https://github.com/glts/vim-radical): radical.vim ✊ Convert decimal, hex, octal, binary number representations
 - [vim-magnum](https://github.com/glts/vim-magnum): Pure Vim script big integer library
 - [vim-tabular](http://vimcasts.org/episod): Vim script for text filtering and alignment
 - [vim-system-copy](https://github.com/christoomey/vim-system-copy): Vim plugin for copying to the system clipboard with text-objects and motions
@@ -60,7 +60,7 @@ Useful mappings for managing tabs:
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
+map <leader>tm :tabmove
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
@@ -92,7 +92,7 @@ map <leader>b :CtrlPBuffer<cr>
 
 ```
 map <leader>nn :NERDTreeToggle<cr>
-map <leader>nb :NERDTreeFromBookmark 
+map <leader>nb :NERDTreeFromBookmark
 map <leader>nf :NERDTreeFind<cr>
 ```
 
