@@ -16,9 +16,6 @@
 [submodule "bundle/vim-tabular"]
 	path = bundle/vim-tabular
 	url = https://github.com/godlygeek/tabular
-[submodule "bundle/ReplaceWithRegister"]
-	path = bundle/ReplaceWithRegister
-	url = https://github.com/vim-scripts/ReplaceWithRegister
 [submodule "bundle/vim-titlecase"]
 	path = bundle/vim-titlecase
 	url = https://github.com/christoomey/vim-titlecase
@@ -64,3 +61,12 @@
 	path = bundle/vim-magnum
 	url = https://github.com/glts/vim-magnum.git
     ignore = dirty
+[submodule "bundle/vim-move"]
+	path = bundle/vim-move
+	url = https://github.com/matze/vim-move
+[submodule "bundle/delimitmate"]
+	path = bundle/delimitmate
+	url = https://github.com/raimondi/delimitmate
+[submodule "bundle/ReplaceWithRegister"]
+	path = bundle/ReplaceWithRegister
+	url = https://github.com/vim-scripts/ReplaceWithRegister
