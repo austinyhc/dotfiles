@@ -21,10 +21,51 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Setup pathogen.vim for pluggin management
+" => Setup Vundle
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-execute pathogen#infect()
-execute pathogen#helptags()
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'fcamel/gj'
+Plugin 'kien/ctrlp.vim'
+Plugin 'raimondi/delimitmate'
+Plugin 'preservim/nerdtree'
+Plugin 'majutsushi/tagbar'
+Plugin 'wellle/targets.vim'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'pseewald/vim-anyfold'
+Plugin 'tpope/vim-fugitive'
+Plugin 'glts/vim-magnum'
+Plugin 'matze/vim-move'
+Plugin 'glts/vim-radical'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'christoomey/vim-tmux-runner'
+Plugin 'mg979/vim-visual-multi'
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -275,14 +316,6 @@ map <leader>nf :NERDTreeFind<cr>
 map <leader>t :TagbarToggle<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-tabular
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <Leader>a= :Tabularize /=<CR>
-vmap <Leader>a= :Tabularize /=<CR>
-nmap <Leader>a: :Tabularize /:\zs<CR>
-vmap <Leader>a: :Tabularize /:\zs<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => delimitMATE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let delimitMate_expand_cr = 1
@@ -292,18 +325,6 @@ let delimitMate_expand_space = 1
 " => vim-Move
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:move_key_modifier = 'C'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-cpp-enhanced-highlight
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:cpp_class_scope_highlight = 1
-let g:cpp_member_variable_highlight = 1
-let g:cpp_class_decl_highlight = 1
-let g:cpp_posix_standard = 1
-let g:cpp_experimental_simple_template_highlight = 1
-let g:cpp_experimental_template_highlight = 1
-let g:cpp_concepts_highlight = 1
-let g:cpp_no_function_highlight = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-anyfold
@@ -318,13 +339,6 @@ set foldlevel=99
 let g:ctrlp_map = '<C-f>'
 map <leader>j :CtrlP<cr>
 map <C-b> :CtrlPBuffer<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-system-copy
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:system_copy#copy_command='xclip -sel clipboard'
-let g:system_copy#paste_command='xclip -sel clipboard -o'
-let g:system_copy_silent = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => dvc
