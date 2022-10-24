@@ -1,0 +1,8 @@
+# This is Git's per-user configuration file.
+[user]
+	name = Austin Chen
+	email = austin.yhc@gmail.com
+[core]
+	editor = vim
+[include]
+    path=~/.vim/gitalias
