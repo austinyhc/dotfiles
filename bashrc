@@ -71,42 +71,8 @@ xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias lg='ll|grep'
-    alias grep='grep --color=auto --exclude=*tags'
-    alias gr='grep -nr'
-fi
-
-# some more ls aliases
-alias ll='ls -ahlF'
-alias la='ls -A'
-alias lt='tree'
-alias l='ls -CF'
-alias cpr='cp -r'
-
-mkcdir(){
-    mkdir "$@"
-    if [ "$1" = "-p" ]; then
-        cd "$2"
-    else
-        cd "$1"
-    fi
-}
-
-alias compile='g++ -std=c++17 -Wshadow -Wall $1 -O2 -Wno-unused-result'
-alias gcompile='g++ -std=c++17 -Wall $1'
-alias build='g++ -std=c++17 -Wshadow -Wall $1 -g -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG'
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [ -f ~/.aliases ]; then
+    . ~/.aliases
 fi
 
 # enable programmable completion features (you don't need to enable
@@ -119,52 +85,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
-## a quick way to get out of current directory
-alias ..='cd ..'
-alias ...='cd ../../../'
-alias ....='cd ../../../../'
-alias .2='cd ../../'
-alias .3='cd ../../../'
-alias .4='cd ../../../../'
-alias .5='cd ../../../../..'
-alias .6='cd ../../../../../..'
-alias .7='cd ../../../../../../..'
-alias .8='cd ../../../../../../../..'
-alias path='echo -e ${PATH//:/\\n}'
-alias reload='source ~/.vim/bashrc'
-alias vimv='vim ~/.vim/vimrc'
-alias vimb='vim ~/.vim/bashrc'
-alias apt-get="apt-fast"
-alias u='sudo apt-fast -y update && sudo apt-fast -y upgrade && git -C ~/.vim pull && make -C ~/.vim update'
-alias find="du -a . |grep "
-alias cc='clear'
-alias fat=func_who_so_fat
-func_who_so_fat() {
-    sudo find ./ -type f -printf "%s\t%p\n" | sort -rn | head -$1
-}
-alias mmd="fortune | cowsay && echo ' '"
-
-## reboot / halt / poweroff
-alias reboot='sudo /sbin/reboot'
-alias poweroff='sudo /sbin/poweroff'
-alias shutdown='sudo /sbin/shutdown'
-alias killjobs='pids=( $(jobs -p) ); [ -n "$pids" ] && kill -- "${pids[@]/#/-}"'
-
-## typo alias
-alias mkdri='mkdir'
-alias grpe="grep"
-alias abd='adb'
-alias vmi='vim'
-alias cc='clear'
-alias sl='ls'
-alias claer='clear'
-
-alias haha='ctags_cscope_func'
-ctags_cscope_func() {
-    ctags -R
-    #cscope -bqkR
-}
 
 # Include local bash_extended
 if [ -f ~/.bash_extended ]; then
@@ -315,15 +235,6 @@ function __setprompt
 
 PROMPT_COMMAND='__setprompt'
 
-# docker
-alias dkls="echo ' ' && docker ps -a && echo ' ' && docker images -a"
-alias dkcc='func_docker_cleanup'
-func_docker_cleanup() {
-    docker ps -q -f status=exited |& xargs docker rm
-    docker images -q -f dangling=true |& xargs docker rmi
-    docker system prune
-}
-
 # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -341,4 +252,12 @@ else
         export PATH="/home/austin/miniconda3/bin:$PATH"  # commented out by conda initialize
     fi
 fi
+
 unset __conda_setup
+. "$HOME/.cargo/env"
+export LUA_PATH='/usr/local/share/lua/5.4/?.lua;/usr/local/share/lua/5.4/?/init.lua;/usr/local/lib/lua/5.4/?.lua;/usr/local/lib/lua/5.4/?/init.lua;./?.lua;./?/init.lua;/home/achen/.luarocks/share/lua/5.4/?.lua;/home/achen/.luarocks/share/lua/5.4/?/init.lua'
+export LUA_CPATH='/usr/local/lib/lua/5.4/?.so;/usr/local/lib/lua/5.4/loadall.so;./?.so;/home/achen/.luarocks/lib/lua/5.4/?.so'
+export PATH='/home/achen/.luarocks/bin:/home/achen/miniconda3/envs/ws/bin:/home/achen/miniconda3/condabin:/home/achen/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
+
+eval "$(thefuck --alias)"
+

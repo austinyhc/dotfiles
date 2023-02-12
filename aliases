@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias lg='ll|grep'
+    alias grep='grep --color=auto --exclude=*tags'
+    alias gr='grep -nr'
+fi
+
+# some more ls aliases
+alias ll='ls -ahlF'
+alias la='ls -A'
+alias lt='tree'
+alias l='ls -CF'
+alias cpr='cp -r'
+
+
+# quick way to get out of current directory
+alias ..='cd ..'
+alias ...='cd ../../../'
+alias ....='cd ../../../../'
+alias .2='cd ../../'
+alias .3='cd ../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../..'
+alias .6='cd ../../../../../..'
+alias .7='cd ../../../../../../..'
+alias .8='cd ../../../../../../../..'
+alias ~="cd ~"
+alias -- -="cd -"
+
+alias path='echo -e ${PATH//:/\\n}'
+alias apt-get="apt-fast"
+alias u='sudo apt-fast -y update && sudo apt-fast -y upgrade && git -C ~/.vim pull && make -C ~/.vim update'
+
+alias mmd="fortune | cowsay && echo ' '"
+
+## reboot / halt / poweroff
+alias reboot='sudo /sbin/reboot'
+alias poweroff='sudo /sbin/poweroff'
+alias shutdown='sudo /sbin/shutdown'
+alias killjobs='pids=( $(jobs -p) ); [ -n "$pids" ] && kill -- "${pids[@]/#/-}"'
+
+# Always enable colored `grep` output
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Enable aliases to be sudo’ed
+alias sudo='sudo '
+
+# Get week number
+alias week='date +%V'
+
+# Intuitive map function
+# For example, to list all directories that contain a certain file:
+# find . -name .gitattributes | map dirname
+alias map="xargs -n1"
+
+# Reload the shell (i.e. invoke as a login shell)
+alias reload="exec ${SHELL} -l"
