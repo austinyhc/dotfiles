@@ -41,7 +41,6 @@ Plugin 'preservim/nerdtree'
 Plugin 'majutsushi/tagbar'
 Plugin 'wellle/targets.vim'
 Plugin 'tomtom/tcomment_vim'
-Plugin 'pseewald/vim-anyfold'
 Plugin 'tpope/vim-fugitive'
 Plugin 'glts/vim-magnum'
 Plugin 'matze/vim-move'
@@ -52,6 +51,10 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'christoomey/vim-tmux-runner'
 Plugin 'mg979/vim-visual-multi'
+Plugin 'ekalinin/dockerfile.vim'
+Plugin 'kana/vim-fakeclip'
+Plugin 'cespare/vim-toml'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -66,6 +69,7 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -159,7 +163,7 @@ inoremap <C-e> <C-o>A
 vnoremap < <gv  " better indentation
 vnoremap > >gv  " better indentation
 
-set nofoldenable
+"set nofoldenable
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -306,6 +310,7 @@ noremap <F2> :set relativenumber! relativenumber?<CR>
 noremap <F3> :set nu! nu?<CR>
 noremap <F4> :set hlsearch! hlsearch?<CR>
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Tagbar/NerdTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -320,18 +325,6 @@ map <leader>t :TagbarToggle<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let delimitMate_expand_cr = 1
 let delimitMate_expand_space = 1
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-Move
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:move_key_modifier = 'C'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-anyfold
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-filetype plugin indent on
-autocmd Filetype * AnyFoldActivate
-set foldlevel=99
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => ctrlp

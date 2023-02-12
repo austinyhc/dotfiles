@@ -5,4 +5,4 @@
 [core]
 	editor = vim
 [include]
-    path=~/.vim/gitalias
+    path=~/dotfiles/gitalias
