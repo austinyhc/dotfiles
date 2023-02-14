@@ -2,11 +2,11 @@
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias lg='ll|grep'
-    alias grep='grep --color=auto --exclude=*tags'
-    alias gr='grep -nr'
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  alias ls='ls --color=auto'
+  alias lg='ll|grep'
+  alias grep='grep --color=auto --exclude=*tags'
+  alias gr='grep -nr'
 fi
 
 # some more ls aliases
@@ -33,7 +33,7 @@ alias -- -="cd -"
 
 alias path='echo -e ${PATH//:/\\n}'
 alias apt-get="apt-fast"
-alias u='sudo apt-fast -y update && sudo apt-fast -y upgrade && git -C ~/.vim pull && make -C ~/.vim update'
+alias u='sudo apt-fast -y update && sudo apt-fast -y upgrade && git -C ~/.vim pull'
 
 alias mmd="fortune | cowsay && echo ' '"
 
