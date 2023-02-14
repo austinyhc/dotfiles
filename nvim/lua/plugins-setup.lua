@@ -15,8 +15,8 @@ local packer_bootstrap = ensure_packer() -- true if packer was just installed
 -- when file is saved
 vim.cmd([[ 
   augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins-setup.lua source <afile> | PackerSync
+  autocmd!
+  autocmd BufWritePost plugins-setup.lua source <afile> | PackerSync
   augroup end
 ]])
 
@@ -95,7 +95,6 @@ return packer.startup(function(use)
 			ts_update()
 		end,
 	})
-	use("nvim-treesitter/playground")
 
 	-- auto closing
 	use("windwp/nvim-autopairs") -- autoclose parens, brackets, quotes, etc...
