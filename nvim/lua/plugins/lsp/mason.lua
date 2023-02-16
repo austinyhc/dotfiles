@@ -26,6 +26,7 @@ mason_lspconfig.setup({
 		"asm_lsp",
 		"rust_analyzer",
 		"lua_ls",
+		"pylsp",
 	},
 	-- auto-install configured servers (with lspconfig)
 	automatic_installation = true, -- not the same as ensure_installed
