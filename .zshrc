@@ -117,6 +117,7 @@ source $ZSH/oh-my-zsh.sh
 
 [[ ! -f ~/.aliases  ]] || source ~/.aliases
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! "$(command -v thefuck)" ]] || eval "$(thefuck --alias)"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
