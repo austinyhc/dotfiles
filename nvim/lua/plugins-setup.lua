@@ -104,6 +104,9 @@ return packer.startup(function(use)
 	-- man page
 	use("paretje/nvim-man") -- autoclose parens, brackets, quotes, etc...
 
+	-- sort
+	use("sQVe/sort.nvim")
+
 	-- git integration
 	use("lewis6991/gitsigns.nvim") -- show line modifications on left hand side
 

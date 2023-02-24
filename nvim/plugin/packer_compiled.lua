@@ -206,6 +206,11 @@ _G.packer_plugins = {
     path = "/home/achen/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
+  ["sort.nvim"] = {
+    loaded = true,
+    path = "/home/achen/.local/share/nvim/site/pack/packer/start/sort.nvim",
+    url = "https://github.com/sQVe/sort.nvim"
+  },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,
     path = "/home/achen/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim",
