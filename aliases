@@ -26,6 +26,10 @@ else
     alias cpr='cp -r'
 fi
 
+alias t='task'
+alias tt='taskwarrior-tui'
+alias ti='timew'
+
 # quick way to get out of current directory
 alias ..='cd ..'
 alias ...='cd ../../../'
@@ -38,7 +42,7 @@ alias .6='cd ../../../../../..'
 alias .7='cd ../../../../../../..'
 alias .8='cd ../../../../../../../..'
 alias ~="cd ~"
-alias -- -="cd -"
+alias - -="cd -"
 
 alias path='echo -e ${PATH//:/\\n}'
 alias apt-get="apt-fast"
