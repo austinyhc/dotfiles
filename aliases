@@ -45,8 +45,12 @@ alias ~="cd ~"
 alias - -="cd -"
 
 alias path='echo -e ${PATH//:/\\n}'
-alias apt-get="apt-fast"
-alias u='sudo apt-fast -y update && sudo apt-fast -y upgrade && git -C ~/.vim pull'
+
+if [ -x "$(command -v exa)" ]; then
+    alias u='sudo nala update && sudo nala upgrade && git -C ~/.vim pull'
+else
+    alias u='sudo apt -y update && sudo apt -y upgrade && git -C ~/.vim pull'
+fi
 
 alias mmd="fortune | cowsay && echo ' '"
 
