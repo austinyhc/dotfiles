@@ -54,6 +54,10 @@ fi
 
 alias mmd="fortune | cowsay && echo ' '"
 
+if [ -x "$(command -v fzf)" ]; then
+    alias ff='vim $(fzf)'
+fi
+
 ## reboot / halt / poweroff
 alias reboot='sudo /sbin/reboot'
 alias poweroff='sudo /sbin/poweroff'
