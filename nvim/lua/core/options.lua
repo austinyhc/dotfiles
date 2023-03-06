@@ -9,6 +9,13 @@ opt.tabstop = 4
 opt.shiftwidth = 4
 opt.expandtab = true
 opt.autoindent = true
+opt.scrolloff = 8
+
+-- long running undo
+opt.swapfile = false
+opt.backup = false
+opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+opt.undofile = true
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "lua",
