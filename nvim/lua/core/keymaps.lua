@@ -28,7 +28,7 @@ keymap.set("n", "N", "Nzzzv")
 keymap.set("x", "<leader>p", '"_dP')
 keymap.set("n", "Q", "<nop>")
 
-keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+keymap.set("n", "<leader>ss", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 -- next greatest remap ever : asbjornHaland
