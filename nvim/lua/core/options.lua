@@ -35,6 +35,16 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+vim.api.nvim_create_autocmd({
+	"BufWritePre",
+	"FileWritePre",
+	"FileAppendPre",
+	"FilterWritePre",
+}, {
+	pattern = { "*" },
+	command = [[%s/\s\+$//e]],
+})
+
 -- line wrapping
 opt.wrap = false
 
