@@ -63,7 +63,8 @@ keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>")
 keymap.set("n", "<leader>fm", "<cmd>Telescope man_pages<cr>")
 keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>")
-keymap.set("n", "<leader>ft", "<cmd>Telescope treesitter<cr>")
+keymap.set("n", "<leader>fta", "<cmd>Telescope treesitter<cr>")
+keymap.set("n", "<leader>fto", "<cmd>TodoTelescope<cr>")
 
 -- telescope git commands (not on youtube nvim video)
 keymap.set("n", "<leader>gc", "<cmd>Telescope git_commits<cr>") -- list all git commits (use <cr> to checkout) ["gc" for git commits]
