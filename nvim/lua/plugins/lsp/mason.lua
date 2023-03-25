@@ -23,7 +23,6 @@ mason_lspconfig.setup({
 	-- list of servers for mason to install
 	ensure_installed = {
 		"clangd",
-		"asm_lsp",
 		"rust_analyzer",
 		"lua_ls",
 		"pylsp",
