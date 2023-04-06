@@ -72,6 +72,23 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/achen/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/achen/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/achen/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/achen/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -79,11 +96,15 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git
+    thefuck
+    web-search
     zsh-completions
     zsh-autosuggestions
     zsh-syntax-highlighting
     z
 )
+
+export FZF_DEFAULT_OPTS='--bind alt-j:down,alt-k:up'
 
 source $ZSH/oh-my-zsh.sh
 
@@ -104,8 +125,6 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-export FZF_DEFAULT_OPTS='--bind alt-j:down,alt-k:up'
-
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -120,20 +139,3 @@ export FZF_DEFAULT_OPTS='--bind alt-j:down,alt-k:up'
 [[ ! -f ~/.aliases  ]] || source ~/.aliases
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-[[ ! "$(command -v thefuck)" ]] || eval "$(thefuck --alias)"
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/achen/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/achen/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/achen/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/achen/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-#
