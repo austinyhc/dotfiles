@@ -10,6 +10,8 @@ opt.shiftwidth = 4
 opt.expandtab = true
 opt.autoindent = true
 opt.scrolloff = 8
+opt.cindent = true
+opt.cinoptions = "g-1"
 
 -- long running undo
 opt.swapfile = false
@@ -69,5 +71,3 @@ opt.clipboard:append("unnamedplus")
 -- split windows
 opt.splitright = true
 opt.splitbelow = true
-
-opt.iskeyword:append("-")
