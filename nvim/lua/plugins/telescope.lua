@@ -18,8 +18,10 @@ telescope.setup({
 			i = {
 				["<M-k>"] = actions.move_selection_previous, -- move to prev result
 				["<M-j>"] = actions.move_selection_next, -- move to next result
-				["<M-c>"] = actions.close, -- close the telescope
-				["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist, -- send selected to quickfixlist
+				["<M-q>"] = actions.close, -- close the telescope
+				["<M-Q>"] = actions.close, -- close the telescope
+				["<C-q>"] = actions.close, -- close the telescope
+				["<C-Q>"] = actions.close, -- close the telescope
 			},
 		},
 	},
