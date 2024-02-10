@@ -83,6 +83,7 @@ alias map="xargs -n1"
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec ${SHELL} -l"
 
+alias nv="nvim"
 alias vim="nvim"
 alias vi="nvim"
 
