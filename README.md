@@ -1,5 +1,5 @@
 <p align="center">
-    <img width="420" src="img/dotfiles-logo.png" alt="dotfiles logo">
+    <img width="420" src="dotfiles-logo.png" alt="dotfiles logo">
 </p>
 
 ---
