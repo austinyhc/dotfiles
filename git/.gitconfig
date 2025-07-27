@@ -5,4 +5,4 @@
 [core]
 	editor = nvim
 [include]
-    path=~/dotfiles/git/.gitalias
+    path=~/.gitalias
