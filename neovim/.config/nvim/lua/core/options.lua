@@ -48,7 +48,7 @@ vim.api.nvim_create_autocmd({
 })
 
 -- line wrapping
-opt.wrap = false
+-- opt.wrap = false
 
 -- search settings
 opt.ignorecase = true
