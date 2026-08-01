@@ -37,6 +37,7 @@ return packer.startup(function(use)
 	use("szw/vim-maximizer") -- maximizes and restores current window
 
 	use("tpope/vim-surround")
+	use("tpope/vim-repeat")
 	use("inkarkat/vim-ReplaceWithRegister") -- replace with register contents using motion (gr + motion)
 	use("numToStr/Comment.nvim") -- commenting with gc
 	use("nvim-tree/nvim-tree.lua") -- file explorer
