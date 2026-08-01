@@ -87,4 +87,5 @@ alias nv="nvim"
 alias vim="nvim"
 alias vi="nvim"
 
-vman () { text=$(man "$@") && echo "$text" | vim -R +":set ft=man" - ; }
+nvman () { text=$(man "$@") && echo "$text" | vim -R +":set ft=man" - ; }
+
