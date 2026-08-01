@@ -196,6 +196,11 @@ _G.packer_plugins = {
     path = "/home/achen/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/nvim-tree/nvim-web-devicons"
   },
+  ["otter.nvim"] = {
+    loaded = true,
+    path = "/home/achen/.local/share/nvim/site/pack/packer/start/otter.nvim",
+    url = "https://github.com/jmbuhr/otter.nvim"
+  },
   ["packer.nvim"] = {
     loaded = true,
     path = "/home/achen/.local/share/nvim/site/pack/packer/start/packer.nvim",
@@ -205,6 +210,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/achen/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
+  },
+  ["quarto-nvim"] = {
+    loaded = true,
+    path = "/home/achen/.local/share/nvim/site/pack/packer/start/quarto-nvim",
+    url = "https://github.com/quarto-dev/quarto-nvim"
   },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,

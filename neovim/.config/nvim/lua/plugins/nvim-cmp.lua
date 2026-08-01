@@ -43,6 +43,7 @@ cmp.setup({
 		{ name = "buffer" }, -- text within current buffer
 		{ name = "path" }, -- file system paths
 		{ name = "emoji" }, -- file system paths
+		{ name = "ottor" }, -- quarto
 	}),
 	-- configure lspkind for vs-code like icons
 	formatting = {

@@ -89,6 +89,16 @@ return packer.startup(function(use)
 	use("paretje/nvim-man") -- autoclose parens, brackets, quotes, etc...
 	use("lewis6991/gitsigns.nvim") -- show line modifications on left hand side
 
+  use({
+    'quarto-dev/quarto-nvim',
+    requires = {
+      'jmbuhr/otter.nvim',
+      'hrsh7th/nvim-cmp',
+      'neovim/nvim-lspconfig',
+      'nvim-treesitter/nvim-treesitter'
+    }
+  })
+
 	use({
 		"folke/todo-comments.nvim",
 		requires = "nvim-lua/plenary.nvim",

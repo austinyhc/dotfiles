@@ -76,3 +76,5 @@ keymap.set({ "n", "t" }, "<A-t>", "<cmd>Lspsaga term_toggle<cr>")
 
 -- restart lsp server (not on youtube nvim video)
 keymap.set("n", "<leader>rs", ":LspRestart<CR>") -- mapping to restart lsp if necessary
+
+keymap.set('n', '<leader>qp', "<cmd>QuartoPreview<cr>")
